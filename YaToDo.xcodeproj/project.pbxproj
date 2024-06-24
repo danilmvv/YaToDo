@@ -58,6 +58,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C8FD9372C29D10400AB4C4A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3C92060D2C256878002A8272 /* TodoItem.swift */,
+				3C9206112C256895002A8272 /* FileCache.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3C8FD9382C29D10E00AB4C4A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3CF6619F2C2085CC00BD719F /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3C92061B2C25ECC0002A8272 /* YaToDoTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,9 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */,
-				3CF6619F2C2085CC00BD719F /* ContentView.swift */,
-				3C92060D2C256878002A8272 /* TodoItem.swift */,
-				3C9206112C256895002A8272 /* FileCache.swift */,
+				3C8FD9382C29D10E00AB4C4A /* Views */,
+				3C8FD9372C29D10400AB4C4A /* Model */,
 				3CF661A12C2085CE00BD719F /* Assets.xcassets */,
 				3CF661A32C2085CE00BD719F /* Preview Content */,
 			);

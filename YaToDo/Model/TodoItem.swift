@@ -111,7 +111,22 @@ extension TodoItem {
 // MARK: CSV parsing
 extension TodoItem {
     static func parse(csv: String) -> TodoItem? {
-        let components = csv.components(separatedBy: ",")
+        var components = [String]()
+        var currentComponent = ""
+        var insideQuotes = false
+        
+        for char in csv {
+            if char == "\"" {
+                insideQuotes.toggle()
+            } else if char == "," && !insideQuotes {
+                components.append(currentComponent)
+                currentComponent = ""
+            } else {
+                currentComponent.append(char)
+            }
+        }
+        
+        components.append(currentComponent)
         
         guard components.count == 7 else {
             return nil

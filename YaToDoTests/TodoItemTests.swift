@@ -184,6 +184,20 @@ final class TodoItemTests: XCTestCase {
         XCTAssertEqual(csv, expectedCSV)
     }
     
+    func testCSVDeserializationWithCommas() {
+        let csv = "123,\"Testing, separators, 123\",false,1718971200.0,high,1718971200.0,1718971200.0"
+        
+        let todoItem = TodoItem.parse(csv: csv)
+        
+        XCTAssertEqual(todoItem?.id, "123")
+        XCTAssertEqual(todoItem?.text, "Testing, separators, 123")
+        XCTAssertEqual(todoItem?.priority, .high)
+        XCTAssertEqual(todoItem?.deadline?.timeIntervalSince1970, 1718971200.0)
+        XCTAssertEqual(todoItem?.isDone, false)
+        XCTAssertEqual(todoItem?.dateCreated.timeIntervalSince1970, 1718971200.0)
+        XCTAssertEqual(todoItem?.dateModified?.timeIntervalSince1970, 1718971200.0)
+    }
+    
     func testTodoItemFromInvalidCSVMissingFields() {
         let csv = "123,,false,,,,"
 
