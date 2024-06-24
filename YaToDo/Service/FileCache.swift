@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum FileCacheError: Error {
+    case fileNotFound
+    case saveFailed(Error)
+    case loadFailed(Error)
+    case parseFailed
+}
+
 final class FileCache {
     private(set) var todos: [TodoItem] = []
     
@@ -22,27 +29,20 @@ final class FileCache {
         todos.removeAll { $0.id == id }
     }
     
-    func saveJSON(filename: String) {
-        guard let fileURL = getDocumentsDirectory()?.appendingPathComponent(filename) else {
-            print("fileURL not found")
-            return
-        }
-        
+    func saveJSON(filename: String) throws {
+        let fileURL = try getFileURL(filename)
         let jsonItems = todos.map({ $0.json })
         
         do {
             let data = try JSONSerialization.data(withJSONObject: jsonItems, options: [])
             try data.write(to: fileURL)
         } catch {
-            print("Save JSON faled: \(error)")
+            throw FileCacheError.saveFailed(error)
         }
     }
     
-    func loadJSON(filename: String) {
-        guard let fileURL = getDocumentsDirectory()?.appendingPathComponent(filename) else {
-            print("fileURL not found")
-            return
-        }
+    func loadJSON(filename: String) throws {
+        let fileURL = try getFileURL(filename)
         
         do {
             let data = try Data(contentsOf: fileURL)
@@ -50,34 +50,29 @@ final class FileCache {
                 for json in jsonItems {
                     if let todoItem = TodoItem.parse(json: json) {
                         addTodo(todoItem)
+                    } else {
+                        throw FileCacheError.parseFailed
                     }
                 }
             }
         } catch {
-            print("Load JSON failed: \(error)")
+            throw FileCacheError.loadFailed(error)
         }
     }
     
-    func saveCSV(filename: String) {
-        guard let fileURL = getDocumentsDirectory()?.appendingPathComponent(filename) else {
-            print("fileURL not found")
-            return
-        }
-        
+    func saveCSV(filename: String) throws {
+        let fileURL = try getFileURL(filename)
         let csvItems = todos.map({ $0.csv }).joined(separator: "\n")
         
         do {
             try csvItems.write(to: fileURL, atomically: true, encoding: .utf8)
         } catch {
-            print("Save CSV failed: \(error)")
+            throw FileCacheError.saveFailed(error)
         }
     }
     
-    func loadCSV(filename: String) {
-        guard let fileURL = getDocumentsDirectory()?.appendingPathComponent(filename) else {
-            print("fileURL not found")
-            return
-        }
+    func loadCSV(filename: String) throws {
+        let fileURL = try getFileURL(filename)
         
         do {
             let data = try String(contentsOf: fileURL, encoding: .utf8)
@@ -89,11 +84,14 @@ final class FileCache {
                 }
             }
         } catch {
-            print("Load CSV failed: \(error)")
+            throw FileCacheError.loadFailed(error)
         }
     }
     
-    private func getDocumentsDirectory() -> URL? {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    private func getFileURL(_ filename: String) throws -> URL {
+        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw FileCacheError.fileNotFound
+        }
+        return directory.appendingPathComponent(filename)
     }
 }

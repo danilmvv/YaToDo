@@ -10,6 +10,8 @@
 		3C92060E2C256878002A8272 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92060D2C256878002A8272 /* TodoItem.swift */; };
 		3C9206122C256895002A8272 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206112C256895002A8272 /* FileCache.swift */; };
 		3C9206242C25ECE2002A8272 /* TodoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206232C25ECE2002A8272 /* TodoItemTests.swift */; };
+		3C9A2B912C2B3012007CD7F8 /* TodoItem+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A2B902C2B3012007CD7F8 /* TodoItem+JSON.swift */; };
+		3C9A2B932C2B301D007CD7F8 /* TodoItem+CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A2B922C2B301D007CD7F8 /* TodoItem+CSV.swift */; };
 		3CD370B72C284F40004B8107 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3CD370B62C284F40004B8107 /* .gitignore */; };
 		3CF6619E2C2085CC00BD719F /* YaToDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */; };
 		3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF6619F2C2085CC00BD719F /* ContentView.swift */; };
@@ -32,6 +34,8 @@
 		3C9206112C256895002A8272 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		3C92061A2C25ECC0002A8272 /* YaToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YaToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C9206232C25ECE2002A8272 /* TodoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemTests.swift; sourceTree = "<group>"; };
+		3C9A2B902C2B3012007CD7F8 /* TodoItem+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+JSON.swift"; sourceTree = "<group>"; };
+		3C9A2B922C2B301D007CD7F8 /* TodoItem+CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CSV.swift"; sourceTree = "<group>"; };
 		3CD370B62C284F40004B8107 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3CF6619A2C2085CC00BD719F /* YaToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YaToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YaToDoApp.swift; sourceTree = "<group>"; };
@@ -62,7 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				3C92060D2C256878002A8272 /* TodoItem.swift */,
-				3C9206112C256895002A8272 /* FileCache.swift */,
+				3C9A2B902C2B3012007CD7F8 /* TodoItem+JSON.swift */,
+				3C9A2B922C2B301D007CD7F8 /* TodoItem+CSV.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -81,6 +86,14 @@
 				3C9206232C25ECE2002A8272 /* TodoItemTests.swift */,
 			);
 			path = YaToDoTests;
+			sourceTree = "<group>";
+		};
+		3C9A2B942C2B3138007CD7F8 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3C9206112C256895002A8272 /* FileCache.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		3CF661912C2085CC00BD719F = {
@@ -108,6 +121,7 @@
 				3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */,
 				3C8FD9382C29D10E00AB4C4A /* Views */,
 				3C8FD9372C29D10400AB4C4A /* Model */,
+				3C9A2B942C2B3138007CD7F8 /* Service */,
 				3CF661A12C2085CE00BD719F /* Assets.xcassets */,
 				3CF661A32C2085CE00BD719F /* Preview Content */,
 			);
@@ -232,9 +246,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */,
+				3C9A2B912C2B3012007CD7F8 /* TodoItem+JSON.swift in Sources */,
 				3C92060E2C256878002A8272 /* TodoItem.swift in Sources */,
 				3C9206122C256895002A8272 /* FileCache.swift in Sources */,
 				3CF6619E2C2085CC00BD719F /* YaToDoApp.swift in Sources */,
+				3C9A2B932C2B301D007CD7F8 /* TodoItem+CSV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,7 @@ final class TodoItemTests: XCTestCase {
     func testTodoItemInit() {
         let id = "123"
         let text = "Test"
-        let priority = TodoItem.Priority.high
+        let priority = TodoItem.Priority.important
         let deadline = Date()
         let isDone = false
         let dateCreated = Date()
@@ -33,7 +33,7 @@ final class TodoItemTests: XCTestCase {
     func testTodoItemDefaultInit() {
         let todo = TodoItem(text: "Test")
         
-        XCTAssertEqual(todo.priority, .regular)
+        XCTAssertEqual(todo.priority, .basic)
         XCTAssertFalse(todo.isDone)
         XCTAssertNotNil(todo.dateCreated)
         XCTAssertNil(todo.dateModified)
@@ -44,7 +44,7 @@ final class TodoItemTests: XCTestCase {
     func testJSONSerialization() {
         let id = "123"
         let text = "Test"
-        let priority = TodoItem.Priority.high
+        let priority = TodoItem.Priority.important
         let deadline = Date()
         let isDone = false
         let dateCreated = Date()
@@ -55,13 +55,13 @@ final class TodoItemTests: XCTestCase {
         let json = todo.json
         
         if let jsonDict = json as? [String: Any] {
-            XCTAssertEqual(jsonDict["id"] as? String, todo.id)
-            XCTAssertEqual(jsonDict["text"] as? String, todo.text)
-            XCTAssertEqual(jsonDict["priority"] as? String, todo.priority.rawValue)
-            XCTAssertEqual(jsonDict["deadline"] as? TimeInterval, todo.deadline?.timeIntervalSince1970)
-            XCTAssertEqual(jsonDict["isDone"] as? Bool, todo.isDone)
-            XCTAssertNotNil(jsonDict["dateCreated"])
-            XCTAssertNotNil(jsonDict["dateModified"])
+            XCTAssertEqual(jsonDict[TodoItem.CodingKeys.id.rawValue] as? String, todo.id)
+            XCTAssertEqual(jsonDict[TodoItem.CodingKeys.text.rawValue] as? String, todo.text)
+            XCTAssertEqual(jsonDict[TodoItem.CodingKeys.priority.rawValue] as? String, todo.priority.rawValue)
+            XCTAssertEqual(jsonDict[TodoItem.CodingKeys.deadline.rawValue] as? TimeInterval, todo.deadline?.timeIntervalSince1970)
+            XCTAssertEqual(jsonDict[TodoItem.CodingKeys.isDone.rawValue] as? Bool, todo.isDone)
+            XCTAssertNotNil(jsonDict[TodoItem.CodingKeys.dateCreated.rawValue])
+            XCTAssertNotNil(jsonDict[TodoItem.CodingKeys.dateModified.rawValue])
         } else {
             XCTFail("JSON Serialization Failed")
         }
@@ -73,10 +73,10 @@ final class TodoItemTests: XCTestCase {
         let json = todo.json
         
         if let dict = json as? [String: Any] {
-            XCTAssertEqual(dict["id"] as? String, todo.id)
-            XCTAssertEqual(dict["text"] as? String, todo.text)
-            XCTAssertEqual(dict["isDone"] as? Bool, todo.isDone)
-            XCTAssertNotNil(dict["dateCreated"])
+            XCTAssertEqual(dict[TodoItem.CodingKeys.id.rawValue] as? String, todo.id)
+            XCTAssertEqual(dict[TodoItem.CodingKeys.text.rawValue] as? String, todo.text)
+            XCTAssertEqual(dict[TodoItem.CodingKeys.isDone.rawValue] as? Bool, todo.isDone)
+            XCTAssertNotNil(dict[TodoItem.CodingKeys.dateCreated.rawValue])
         } else {
             XCTFail("JSON Serialization Without Optional Fields Failed")
         }
@@ -84,19 +84,19 @@ final class TodoItemTests: XCTestCase {
     
     func testJSONDeserialization() {
         let json: [String: Any] = [
-            "id": "123",
-            "text": "Test",
-            "priority": "high",
-            "deadline": Date().timeIntervalSince1970,
-            "isDone": false,
-            "dateCreated": Date().timeIntervalSince1970,
-            "dateModified": Date().timeIntervalSince1970,
+            TodoItem.CodingKeys.id.rawValue: "123",
+            TodoItem.CodingKeys.text.rawValue: "Test",
+            TodoItem.CodingKeys.priority.rawValue: "important",
+            TodoItem.CodingKeys.deadline.rawValue: Date().timeIntervalSince1970,
+            TodoItem.CodingKeys.isDone.rawValue: false,
+            TodoItem.CodingKeys.dateCreated.rawValue: Date().timeIntervalSince1970,
+            TodoItem.CodingKeys.dateModified.rawValue: Date().timeIntervalSince1970,
         ]
         
         if let todo = TodoItem.parse(json: json) {
             XCTAssertEqual(todo.id, "123")
             XCTAssertEqual(todo.text, "Test")
-            XCTAssertEqual(todo.priority, .high)
+            XCTAssertEqual(todo.priority, .important)
             XCTAssertNotNil(todo.deadline)
             XCTAssertFalse(todo.isDone)
             XCTAssertNotNil(todo.dateCreated)
@@ -108,16 +108,16 @@ final class TodoItemTests: XCTestCase {
     
     func testJSONDeserializationWithoutOptionalFields() {
         let json: [String: Any] = [
-            "id": "123",
-            "text": "Test",
-            "isDone": false,
-            "dateCreated": Date().timeIntervalSince1970,
+            TodoItem.CodingKeys.id.rawValue: "123",
+            TodoItem.CodingKeys.text.rawValue: "Test",
+            TodoItem.CodingKeys.isDone.rawValue: false,
+            TodoItem.CodingKeys.dateCreated.rawValue: Date().timeIntervalSince1970,
         ]
         
         if let todo = TodoItem.parse(json: json) {
             XCTAssertEqual(todo.id, "123")
             XCTAssertEqual(todo.text, "Test")
-            XCTAssertEqual(todo.priority, .regular)
+            XCTAssertEqual(todo.priority, .basic)
             XCTAssertFalse(todo.isDone)
             XCTAssertNotNil(todo.dateCreated)
         } else {
@@ -127,7 +127,7 @@ final class TodoItemTests: XCTestCase {
     
     func testJSONDeserializationWithMissingRequiredFields() {
         let json: [String: Any] = [
-            "priority": "high",
+            TodoItem.CodingKeys.priority.rawValue: "high",
         ]
 
         let todoItem = TodoItem.parse(json: json)
@@ -140,7 +140,7 @@ final class TodoItemTests: XCTestCase {
         let todoItem = TodoItem(
             id: "123",
             text: "Test",
-            priority: .high,
+            priority: .important,
             deadline: Date(timeIntervalSince1970: 1718971200),
             isDone: false,
             dateCreated: Date(timeIntervalSince1970: 1718971200),
@@ -149,18 +149,18 @@ final class TodoItemTests: XCTestCase {
 
         let csv = todoItem.csv
 
-        let expectedCSV = "123,Test,false,1718971200.0,high,1718971200.0,1718971200.0"
+        let expectedCSV = "123,Test,false,1718971200.0,important,1718971200.0,1718971200.0"
         XCTAssertEqual(csv, expectedCSV)
     }
     
     func testCSVDeserialization() {
-        let csv = "123,Test,false,1718971200.0,high,1718971200.0,1718971200.0"
+        let csv = "123,Test,false,1718971200.0,important,1718971200.0,1718971200.0"
 
         let todoItem = TodoItem.parse(csv: csv)
 
         XCTAssertEqual(todoItem?.id, "123")
         XCTAssertEqual(todoItem?.text, "Test")
-        XCTAssertEqual(todoItem?.priority, .high)
+        XCTAssertEqual(todoItem?.priority, .important)
         XCTAssertEqual(todoItem?.deadline?.timeIntervalSince1970, 1718971200.0)
         XCTAssertEqual(todoItem?.isDone, false)
         XCTAssertEqual(todoItem?.dateCreated.timeIntervalSince1970, 1718971200.0)
@@ -171,7 +171,7 @@ final class TodoItemTests: XCTestCase {
         let todoItem = TodoItem(
             id: "123",
             text: "Testing, separators, 123",
-            priority: .high,
+            priority: .important,
             deadline: Date(timeIntervalSince1970: 1718971200),
             isDone: false,
             dateCreated: Date(timeIntervalSince1970: 1718971200),
@@ -180,18 +180,18 @@ final class TodoItemTests: XCTestCase {
 
         let csv = todoItem.csv
 
-        let expectedCSV = "123,\"Testing, separators, 123\",false,1718971200.0,high,1718971200.0,1718971200.0"
+        let expectedCSV = "123,\"Testing, separators, 123\",false,1718971200.0,important,1718971200.0,1718971200.0"
         XCTAssertEqual(csv, expectedCSV)
     }
     
     func testCSVDeserializationWithCommas() {
-        let csv = "123,\"Testing, separators, 123\",false,1718971200.0,high,1718971200.0,1718971200.0"
+        let csv = "123,\"Testing, separators, 123\",false,1718971200.0,important,1718971200.0,1718971200.0"
         
         let todoItem = TodoItem.parse(csv: csv)
         
         XCTAssertEqual(todoItem?.id, "123")
         XCTAssertEqual(todoItem?.text, "Testing, separators, 123")
-        XCTAssertEqual(todoItem?.priority, .high)
+        XCTAssertEqual(todoItem?.priority, .important)
         XCTAssertEqual(todoItem?.deadline?.timeIntervalSince1970, 1718971200.0)
         XCTAssertEqual(todoItem?.isDone, false)
         XCTAssertEqual(todoItem?.dateCreated.timeIntervalSince1970, 1718971200.0)
