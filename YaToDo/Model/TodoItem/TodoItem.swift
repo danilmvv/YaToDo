@@ -16,10 +16,22 @@ struct TodoItem: Identifiable, Equatable {
     let dateCreated: Date
     let dateModified: Date?
     
-    enum Priority: String, CaseIterable {
+    enum Priority: String, CaseIterable, Comparable {
         case low
         case basic
         case important
+        
+        /// Функция для сравнения пиоритетов
+        static func < (lhs: Priority, rhs: Priority) -> Bool {
+            switch (lhs, rhs) {
+            case (.low, _):
+                return true
+            case (.basic, .important):
+                return true
+            default:
+                return false
+            }
+        }
     }
     
     init(
