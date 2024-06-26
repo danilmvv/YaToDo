@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C4EB7092C2BF1D9000B7F6A /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB7082C2BF1D9000B7F6A /* Date+Formatting.swift */; };
 		3C92060E2C256878002A8272 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92060D2C256878002A8272 /* TodoItem.swift */; };
 		3C9206122C256895002A8272 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206112C256895002A8272 /* FileCache.swift */; };
 		3C9206242C25ECE2002A8272 /* TodoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206232C25ECE2002A8272 /* TodoItemTests.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C4EB7082C2BF1D9000B7F6A /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
 		3C92060D2C256878002A8272 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		3C9206112C256895002A8272 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		3C92061A2C25ECC0002A8272 /* YaToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YaToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,12 +76,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C4EB7062C2BF0F9000B7F6A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3C4EB7072C2BF133000B7F6A /* Extensions */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3C4EB7072C2BF133000B7F6A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3C4EB7082C2BF1D9000B7F6A /* Date+Formatting.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		3C8FD9372C29D10400AB4C4A /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				3C9A2B952C2B3E9C007CD7F8 /* TodoItem */,
-				3C9A2B962C2B3EC8007CD7F8 /* ModelData.swift */,
 				3C9206112C256895002A8272 /* FileCache.swift */,
+				3C9A2B962C2B3EC8007CD7F8 /* ModelData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,6 +174,7 @@
 				3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */,
 				3C8FD9382C29D10E00AB4C4A /* Views */,
 				3C8FD9372C29D10400AB4C4A /* Model */,
+				3C4EB7062C2BF0F9000B7F6A /* Helpers */,
 				3CF661A12C2085CE00BD719F /* Assets.xcassets */,
 				3CF661A32C2085CE00BD719F /* Preview Content */,
 			);
@@ -281,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C4EB7092C2BF1D9000B7F6A /* Date+Formatting.swift in Sources */,
 				3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */,
 				3C9A2B912C2B3012007CD7F8 /* TodoItem+JSON.swift in Sources */,
 				3C9A2B9B2C2B4240007CD7F8 /* TodoRow.swift in Sources */,

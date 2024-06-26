@@ -13,31 +13,77 @@ struct TodoRow: View {
     var todoIndex: Int {
         modelData.todos.firstIndex(where: { $0.id == todo.id }) ?? 0
     }
-
+    
     var body: some View {
+        let isDone = modelData.todos[todoIndex].isDone
+        
         HStack {
+            
+            // Done Button
             Button {
                 withAnimation {
                     modelData.toggleCompletion(todo)
                 }
             } label: {
-                let isDone = modelData.todos[todoIndex].isDone
-                Label("Toggle Done", systemImage: isDone ? "checkmark.circle.fill" : "circle")
-                    .labelStyle(.iconOnly)
+                Image(systemName: isDone ? "checkmark.circle.fill" : "circle")
+                    .resizable()
+                    .scaledToFit()
                     .foregroundColor(
-                        isDone ? .green : (todo.priority == .important ? .red : .primary)
+                        isDone ? .green : (todo.priority == .important ? .red : .secondary)
                     )
+                    .background(!isDone && todo.priority == .important ? .red.opacity(0.1) : .clear)
+                    .clipShape(Circle())
+                    .frame(width: 24)
+                
             }
             .buttonStyle(.plain)
+            .contentTransition(.symbolEffect(.replace))
             
-            Text(todo.text)
-                .foregroundStyle(todo.isDone ? .gray : .primary)
-                .strikethrough(todo.isDone, color: .gray)
+            VStack(alignment: .leading) {
+                HStack(spacing: 2) {
+                    
+                    // Priority Label
+                    if todo.priority != .basic && !isDone {
+                        Image(
+                            systemName: todo.priority == .low
+                            ? "arrow.down"
+                            : "exclamationmark.2"
+                        )
+                        .foregroundColor(todo.priority == .low ? .secondary : .red)
+                        .fontWeight(.bold)
+                    }
+                    
+                    // Todo Text
+                    Text(todo.text)
+                        .lineLimit(3)
+                        .truncationMode(.tail)
+                        .foregroundStyle(todo.isDone ? .secondary : .primary)
+                        .strikethrough(todo.isDone, color: .secondary)
+                    
+                }
+                
+                // Deadline
+                if let deadline = todo.deadline {
+                    HStack(spacing: 2) {
+                        Image(systemName: "calendar")
+                        Text(deadline.formattedDayMonth())
+                            .font(.caption)
+                    }
+                    .foregroundColor(.secondary)
+                }
+            }
         }
     }
 }
 
+
+
 #Preview {
-    TodoRow(todo: TodoItem(id: "123", text: "Купить что-то"))
+    TodoRow(todo: TodoItem(id: "123", text: "Купить что-то", priority: .important, deadline: Date()))
+        .environment(ModelData())
+}
+
+#Preview {
+    TodoList()
         .environment(ModelData())
 }
