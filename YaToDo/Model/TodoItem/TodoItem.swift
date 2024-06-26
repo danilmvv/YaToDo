@@ -32,6 +32,17 @@ struct TodoItem: Identifiable, Equatable {
                 return false
             }
         }
+        
+        var icon: String {
+            switch self {
+            case .low:
+                return "arrow.down"
+            case .basic:
+                return "нет"
+            case .important:
+                return "exclamationmark.2"
+            }
+        }
     }
     
     init(

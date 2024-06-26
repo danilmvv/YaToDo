@@ -53,49 +53,64 @@ final class ModelData {
                 dateCreated: currentDate.addingTimeInterval(-12 * oneDay)
             ),
             TodoItem(
-                text: "Купить что-то", priority: .low, 
+                text: "Купить что-то", 
+                priority: .low,
                 dateCreated: currentDate.addingTimeInterval(-11 * oneDay)
             ),
             TodoItem(
-                text: "Купить что-то", priority: .important, 
+                text: "Купить что-то", 
+                priority: .important,
                 dateCreated: currentDate.addingTimeInterval(-10 * oneDay)
             ),
             TodoItem(
-                text: "Купить что-то", isDone: true, 
+                text: "Купить что-то", 
+                isDone: true,
                 dateCreated: currentDate.addingTimeInterval(-9 * oneDay)
             ),
             TodoItem(
-                text: "Задание", deadline: currentDate.addingTimeInterval(86400), 
+                text: "Задание", 
+                deadline: currentDate.addingTimeInterval(86400),
                 dateCreated: currentDate.addingTimeInterval(-8 * oneDay)
             ),
             
+            
             TodoItem(
-                id: "123", text: "Купить что-то",
+                id: "123", 
+                text: "Купить что-то",
                 dateCreated: currentDate.addingTimeInterval(-7 * oneDay)
             ),
             TodoItem(
                 text: "Купить что-то, где-то, зачем-то, но зачем не очень понятно",
+                priority: .important,
                 dateCreated: currentDate.addingTimeInterval(-6 * oneDay)
             ),
             TodoItem(
                 text: "Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обрезается многоточие бла бла бла бла бла",
-                dateCreated: currentDate.addingTimeInterval(-5 * oneDay)),
+                deadline: currentDate.addingTimeInterval(86400),
+                dateCreated: currentDate.addingTimeInterval(-5 * oneDay)
+            ),
             TodoItem(
-                text: "Купить что-то", priority: .low,
+                text: "Купить что-то", 
+                priority: .low,
                 dateCreated: currentDate.addingTimeInterval(-4 * oneDay)
             ),
             TodoItem(
-                text: "Купить что-то", priority: .important,
+                text: "Купить что-то", 
+                priority: .important,
                 dateCreated: currentDate.addingTimeInterval(-3 * oneDay)
             ),
             TodoItem(
-                text: "Купить что-то", isDone: true,
+                text: "Купить что-то", 
+                isDone: true,
                 dateCreated: currentDate.addingTimeInterval(-2 * oneDay)
             ),
             TodoItem(
-                text: "Задание", deadline: currentDate.addingTimeInterval(86400),
+                text: "Задание", 
+                deadline: currentDate.addingTimeInterval(86400),
                 dateCreated: currentDate.addingTimeInterval(-1 * oneDay)
             )
+            
+            
         ]
     }
     

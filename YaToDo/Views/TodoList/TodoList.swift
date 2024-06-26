@@ -10,15 +10,21 @@ import SwiftUI
 struct TodoList: View {
     @Environment(ModelData.self) var modelData
     
+    @State private var showAddTodoView = false
+    @State private var selectedTodo: TodoItem?
+    
     var body: some View {
         @Bindable var modelData = modelData
         
         NavigationStack {
-            ZStack(alignment: .bottom) {
+            ZStack {
                 List {
                     Section {
                         ForEach(modelData.filteredTodos) { todo in
                             TodoRow(todo: todo)
+                                .onTapGesture {
+                                    selectedTodo = todo
+                                }
                                 .swipeActions(edge: .leading) {
                                     Button {
                                         withAnimation {
@@ -48,6 +54,7 @@ struct TodoList: View {
                         Text("Выполнено – \(modelData.todos.filter { $0.isDone }.count)")
                     }
                 }
+                .safeAreaPadding(EdgeInsets(top: 0, leading: 0, bottom: 44, trailing: 0))
                 .animation(.default, value: modelData.filteredTodos)
                 .navigationTitle("Мои Дела")
                 .toolbar {
@@ -69,17 +76,26 @@ struct TodoList: View {
                     }
                 }
                 
-                Button {
-                    // TODO: add new todo
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44)
-                        .background(.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 8)
+                VStack {
+                    Spacer()
+                    Button {
+                        showAddTodoView = true
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 44)
+                            .background(.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 8)
+                    }
                 }
+            }
+            .sheet(item: $selectedTodo) { todo in
+                TodoEdit(viewModel: TodoEdit.ViewModel(todo: todo))
+            }
+            .sheet(isPresented: $showAddTodoView) {
+                TodoEdit(viewModel: TodoEdit.ViewModel())
             }
         }
     }

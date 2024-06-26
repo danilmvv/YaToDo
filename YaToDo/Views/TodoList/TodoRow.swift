@@ -18,7 +18,6 @@ struct TodoRow: View {
         let isDone = modelData.todos[todoIndex].isDone
         
         HStack {
-            
             // Done Button
             Button {
                 withAnimation {
@@ -33,7 +32,8 @@ struct TodoRow: View {
                     )
                     .background(!isDone && todo.priority == .important ? .red.opacity(0.1) : .clear)
                     .clipShape(Circle())
-                    .frame(width: 24)
+                    .frame(maxWidth: 24, maxHeight: .infinity)
+                    .contentShape(Rectangle())
                 
             }
             .buttonStyle(.plain)
@@ -59,7 +59,6 @@ struct TodoRow: View {
                         .truncationMode(.tail)
                         .foregroundStyle(todo.isDone ? .secondary : .primary)
                         .strikethrough(todo.isDone, color: .secondary)
-                    
                 }
                 
                 // Deadline
@@ -73,6 +72,8 @@ struct TodoRow: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 }
 
