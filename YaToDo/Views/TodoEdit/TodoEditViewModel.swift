@@ -12,38 +12,46 @@ extension TodoEdit {
     @Observable
     class ViewModel {
         var todo: TodoItem?
+        var todoId: String
         var todoText: String
-        var priority: TodoItem.Priority
+        var todoPriority: TodoItem.Priority
         var hasDeadline: Bool
-        var deadlineDate: Date
-        var dateCreated: Date
+        var todoDeadline: Date
+        var todoCompletion: Bool
+        var todoDateCreated: Date
         
         /// Инициализатор для добавления нового todo
         init() {
             self.todo = nil
+            self.todoId = UUID().uuidString
             self.todoText = ""
-            self.priority = .basic
+            self.todoPriority = .basic
             self.hasDeadline = false
-            self.deadlineDate = Date().addingTimeInterval(86400)
-            self.dateCreated = Date()
+            self.todoDeadline = Date().addingTimeInterval(86400)
+            self.todoCompletion = false
+            self.todoDateCreated = Date()
         }
         
         /// Инициализатор для изменения существующего todo
         init(todo: TodoItem) {
             self.todo = todo
+            self.todoId = todo.id
             self.todoText = todo.text
-            self.priority = todo.priority
+            self.todoPriority = todo.priority
             self.hasDeadline = todo.deadline != nil
-            self.deadlineDate = todo.deadline ?? Date().addingTimeInterval(86400)
-            self.dateCreated = todo.dateCreated
+            self.todoDeadline = todo.deadline ?? Date().addingTimeInterval(86400)
+            self.todoCompletion = todo.isDone
+            self.todoDateCreated = todo.dateCreated
         }
         
         func createTodo() -> TodoItem {
             let newTodo = TodoItem(
+                id: todoId,
                 text: todoText,
-                priority: priority,
-                deadline: hasDeadline ? deadlineDate : nil,
-                dateCreated: dateCreated,
+                priority: todoPriority,
+                deadline: hasDeadline ? todoDeadline : nil,
+                isDone: todoCompletion,
+                dateCreated: todoDateCreated,
                 dateModified: Date()
             )
             

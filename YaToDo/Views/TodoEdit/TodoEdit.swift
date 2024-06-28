@@ -17,9 +17,9 @@ struct TodoEdit: View {
     
     var body: some View {
         NavigationStack {
-            Form {
+            List {
                 Section {
-                    textField
+                    todoTextField
                 }
                 
                 Section {
@@ -29,13 +29,54 @@ struct TodoEdit: View {
                         deadlineCalendar
                     }
                 }
+                .onChange(of: viewModel.hasDeadline) {
+                    if !viewModel.hasDeadline {
+                        showCalendar = false
+                    }
+                }
+                
+                /*
+                 
+                 В макете кнопка "удалить" – disabled, при создании новой тудушки,
+                 но я ее убрал полностью, потому что мне кажется это более логичным.
+                 
+                 Но если убрать if, то кнопка будет как в макете.
+                 
+                 */
+                
+                if viewModel.todo != nil {
+                    Section {
+                        deleteButton
+                    }
+                }
             }
-            .navigationTitle(viewModel.todo == nil ? "Новое дело" : "Редактировать дело")
+            .listSectionSpacing(16)
+            .navigationTitle(viewModel.todo == nil ? "Новое дело" : "Дело")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        modelData.addTodo(viewModel.createTodo())
+                        dismiss()
+                    } label: {
+                        Text("Сохранить")
+                            .fontWeight(.semibold)
+                    }
+                    .disabled(viewModel.todoText.isEmpty)
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Отменить")
+                    }
+                }
+            }
         }
     }
     
-    private var textField: some View {
+    private var todoTextField: some View {
         TextField("Что надо сделать?", text: $viewModel.todoText, axis: .vertical)
             .padding(.vertical, 5)
             .lineLimit(3...)
@@ -47,12 +88,16 @@ struct TodoEdit: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             // TODO: Написать кастомный пикер
-            Picker("", selection: $viewModel.priority) {
+            Picker("", selection: $viewModel.todoPriority) {
                 ForEach(TodoItem.Priority.allCases, id: \.self) { priority in
-                    if priority != .basic {
+                    if priority == .important {
+                        Text("‼")
+                            .tag(priority)
+                    } else if priority != .basic {
                         Image(systemName: priority.icon)
                             .tag(priority)
-                    } else {
+                    }
+                    else {
                         Text("нет")
                             .tag(priority)
                     }
@@ -61,7 +106,7 @@ struct TodoEdit: View {
             .pickerStyle(.segmented)
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
-        .padding(.vertical, 5)
+        .padding(.vertical, 4)
     }
     
     private var deadlineToggle: some View {
@@ -75,13 +120,13 @@ struct TodoEdit: View {
                             showCalendar.toggle()
                         }
                     } label: {
-                        Text(viewModel.deadlineDate.formattedDayMonthYear())
+                        Text(viewModel.todoDeadline.formattedDayMonthYear())
                             .font(.subheadline)
                             .fontWeight(.semibold)
                     }
                 }
             }
-            .frame(height: 42)
+            .frame(height: 40)
             .animation(.default, value: viewModel.hasDeadline)
             
             Spacer()
@@ -93,10 +138,26 @@ struct TodoEdit: View {
     
     private var deadlineCalendar: some View {
         VStack {
-            DatePicker("Дедлайн", selection: $viewModel.deadlineDate, displayedComponents: .date)
+            DatePicker("Дедлайн", selection: $viewModel.todoDeadline, displayedComponents: .date)
                 .datePickerStyle(.graphical)
         }
         .padding(.top, -10)
+        
+    }
+    
+    private var deleteButton: some View {
+        let canDelete = viewModel.todo != nil
+        
+        return Button {
+            modelData.deleteTodo(viewModel.todoId)
+            dismiss()
+        } label: {
+            Text("Удалить")
+                .foregroundStyle(canDelete ? .red : .secondary)
+        }
+        .padding(8)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .disabled(!canDelete)
     }
     
 }

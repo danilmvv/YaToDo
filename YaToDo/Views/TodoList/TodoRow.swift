@@ -9,15 +9,23 @@ import SwiftUI
 
 struct TodoRow: View {
     @Environment(ModelData.self) var modelData
+    
     var todo: TodoItem
     var todoIndex: Int {
         modelData.todos.firstIndex(where: { $0.id == todo.id }) ?? 0
     }
     
-    var body: some View {
-        let isDone = modelData.todos[todoIndex].isDone
+    var isDone: Bool {
+        if !modelData.todos.isEmpty {
+            return modelData.todos[todoIndex].isDone
+        }
         
+        return false
+    }
+    
+    var body: some View {
         HStack {
+            
             // Done Button
             Button {
                 withAnimation {
@@ -40,7 +48,7 @@ struct TodoRow: View {
             .contentTransition(.symbolEffect(.replace))
             
             VStack(alignment: .leading) {
-                HStack(spacing: 2) {
+                HStack(spacing: 4) {
                     
                     // Priority Label
                     if todo.priority != .basic && !isDone {
@@ -49,6 +57,7 @@ struct TodoRow: View {
                             ? "arrow.down"
                             : "exclamationmark.2"
                         )
+                        .frame(minWidth: 16)
                         .foregroundColor(todo.priority == .low ? .secondary : .red)
                         .fontWeight(.bold)
                     }
