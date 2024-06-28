@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3C4EB7092C2BF1D9000B7F6A /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB7082C2BF1D9000B7F6A /* Date+Formatting.swift */; };
 		3C4EB70B2C2C064A000B7F6A /* TodoEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB70A2C2C064A000B7F6A /* TodoEditViewModel.swift */; };
+		3C4EB70D2C2EC1A3000B7F6A /* Color+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB70C2C2EC1A3000B7F6A /* Color+HexString.swift */; };
+		3C4EB70F2C2EC642000B7F6A /* Color+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB70E2C2EC642000B7F6A /* Color+Random.swift */; };
 		3C92060E2C256878002A8272 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92060D2C256878002A8272 /* TodoItem.swift */; };
 		3C9206122C256895002A8272 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206112C256895002A8272 /* FileCache.swift */; };
 		3C9206242C25ECE2002A8272 /* TodoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206232C25ECE2002A8272 /* TodoItemTests.swift */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		3C4EB7082C2BF1D9000B7F6A /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
 		3C4EB70A2C2C064A000B7F6A /* TodoEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEditViewModel.swift; sourceTree = "<group>"; };
+		3C4EB70C2C2EC1A3000B7F6A /* Color+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+HexString.swift"; sourceTree = "<group>"; };
+		3C4EB70E2C2EC642000B7F6A /* Color+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Random.swift"; sourceTree = "<group>"; };
 		3C92060D2C256878002A8272 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		3C9206112C256895002A8272 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		3C92061A2C25ECC0002A8272 /* YaToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YaToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,18 +82,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3C4EB7062C2BF0F9000B7F6A /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				3C4EB7072C2BF133000B7F6A /* Extensions */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		3C4EB7072C2BF133000B7F6A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				3C4EB7082C2BF1D9000B7F6A /* Date+Formatting.swift */,
+				3C4EB70C2C2EC1A3000B7F6A /* Color+HexString.swift */,
+				3C4EB70E2C2EC642000B7F6A /* Color+Random.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -177,7 +175,7 @@
 				3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */,
 				3C8FD9382C29D10E00AB4C4A /* Views */,
 				3C8FD9372C29D10400AB4C4A /* Model */,
-				3C4EB7062C2BF0F9000B7F6A /* Helpers */,
+				3C4EB7072C2BF133000B7F6A /* Extensions */,
 				3CF661A12C2085CE00BD719F /* Assets.xcassets */,
 				3CF661A32C2085CE00BD719F /* Preview Content */,
 			);
@@ -303,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C4EB70F2C2EC642000B7F6A /* Color+Random.swift in Sources */,
 				3C4EB7092C2BF1D9000B7F6A /* Date+Formatting.swift in Sources */,
 				3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */,
 				3C9A2B912C2B3012007CD7F8 /* TodoItem+JSON.swift in Sources */,
@@ -311,6 +310,7 @@
 				3C9A2B992C2B4235007CD7F8 /* TodoList.swift in Sources */,
 				3C4EB70B2C2C064A000B7F6A /* TodoEditViewModel.swift in Sources */,
 				3C9206122C256895002A8272 /* FileCache.swift in Sources */,
+				3C4EB70D2C2EC1A3000B7F6A /* Color+HexString.swift in Sources */,
 				3CF6619E2C2085CC00BD719F /* YaToDoApp.swift in Sources */,
 				3C9A2BA12C2B42CC007CD7F8 /* TodoEdit.swift in Sources */,
 				3C9A2B972C2B3EC8007CD7F8 /* ModelData.swift in Sources */,

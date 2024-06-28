@@ -24,22 +24,11 @@ struct TodoEdit: View {
             Form {
                 Section {
                     todoTextField
-                        .focused($focusedField, equals: .text)
-                        .toolbar {
-                            ToolbarItem(placement: .keyboard) {
-                                HStack {
-                                    Spacer()
-                                    Button("Готово") {
-                                        focusedField = nil
-                                    }
-                                }
-                            }
-                        }
-                    
                 }
                 
                 Section {
                     priorityPicker
+                    colorPicker
                     deadlineToggle
                     if showCalendar && viewModel.hasDeadline {
                         deadlineCalendar
@@ -88,6 +77,15 @@ struct TodoEdit: View {
                         Text("Отменить")
                     }
                 }
+                
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button("Готово") {
+                            focusedField = nil
+                        }
+                    }
+                }
             }
         }
     }
@@ -96,6 +94,7 @@ struct TodoEdit: View {
         TextField("Что надо сделать?", text: $viewModel.todoText, axis: .vertical)
             .padding(.vertical, 5)
             .lineLimit(3...)
+            .focused($focusedField, equals: .text)
     }
     
     private var priorityPicker: some View {
@@ -103,7 +102,7 @@ struct TodoEdit: View {
             Text("Важность")
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            // TODO: Написать кастомный пикер
+            // TODO: Make a custom picker
             Picker("", selection: $viewModel.todoPriority) {
                 ForEach(TodoItem.Priority.allCases, id: \.self) { priority in
                     if priority == .important {
@@ -123,6 +122,21 @@ struct TodoEdit: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding(.vertical, 4)
+    }
+    
+    private var colorPicker: some View {
+        HStack {
+            Text("Цвет")
+            
+            Spacer()
+                    
+            
+            // TODO: Color Picker
+            Image(systemName: "circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20)
+        }
     }
     
     private var deadlineToggle: some View {
@@ -165,6 +179,8 @@ struct TodoEdit: View {
         let canDelete = viewModel.todo != nil
         
         return Button {
+            
+            // TODO: Confirmation modal
             modelData.deleteTodo(viewModel.todoId)
             dismiss()
         } label: {

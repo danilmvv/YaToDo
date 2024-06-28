@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct TodoItem: Identifiable, Equatable {
     let id: String
     let text: String
     let priority: Priority
+    let color: String
     let deadline: Date?
     let isDone: Bool
     let dateCreated: Date
@@ -49,6 +51,7 @@ struct TodoItem: Identifiable, Equatable {
         id: String = UUID().uuidString,
         text: String,
         priority: Priority = .basic,
+        color: String = Color.random().toHexString(),
         deadline: Date? = nil,
         isDone: Bool = false,
         dateCreated: Date = Date(),
@@ -57,6 +60,7 @@ struct TodoItem: Identifiable, Equatable {
         self.id = id
         self.text = text
         self.priority = priority
+        self.color = color
         self.deadline = deadline
         self.isDone = isDone
         self.dateCreated = dateCreated

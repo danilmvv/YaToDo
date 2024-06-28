@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension TodoEdit {
     
@@ -15,6 +16,7 @@ extension TodoEdit {
         var todoId: String
         var todoText: String
         var todoPriority: TodoItem.Priority
+        var todoColor: Color
         var hasDeadline: Bool
         var todoDeadline: Date
         var todoCompletion: Bool
@@ -26,6 +28,7 @@ extension TodoEdit {
             self.todoId = UUID().uuidString
             self.todoText = ""
             self.todoPriority = .basic
+            self.todoColor = Color.random()
             self.hasDeadline = false
             self.todoDeadline = Date().addingTimeInterval(86400)
             self.todoCompletion = false
@@ -38,6 +41,7 @@ extension TodoEdit {
             self.todoId = todo.id
             self.todoText = todo.text
             self.todoPriority = todo.priority
+            self.todoColor = Color.fromHexString(todo.color)
             self.hasDeadline = todo.deadline != nil
             self.todoDeadline = todo.deadline ?? Date().addingTimeInterval(86400)
             self.todoCompletion = todo.isDone
@@ -49,6 +53,7 @@ extension TodoEdit {
                 id: todoId,
                 text: todoText,
                 priority: todoPriority,
+                color: todoColor.toHexString(),
                 deadline: hasDeadline ? todoDeadline : nil,
                 isDone: todoCompletion,
                 dateCreated: todoDateCreated,
