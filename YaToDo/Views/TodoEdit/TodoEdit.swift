@@ -12,14 +12,30 @@ struct TodoEdit: View {
     @Environment(\.dismiss) var dismiss
     
     @State var viewModel: ViewModel
-    
     @State private var showCalendar = false
+    
+    enum Field {
+        case text
+    }
+    @FocusState private var focusedField: Field?
     
     var body: some View {
         NavigationStack {
-            List {
+            Form {
                 Section {
                     todoTextField
+                        .focused($focusedField, equals: .text)
+                        .toolbar {
+                            ToolbarItem(placement: .keyboard) {
+                                HStack {
+                                    Spacer()
+                                    Button("Готово") {
+                                        focusedField = nil
+                                    }
+                                }
+                            }
+                        }
+                    
                 }
                 
                 Section {
