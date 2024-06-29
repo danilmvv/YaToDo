@@ -17,6 +17,7 @@ struct TodoEdit: View {
     
     @State private var sheetHeight: CGFloat = .zero
     @State private var showCalendar = false
+    @State private var showColorPicker = false
     
     enum Field {
         case text
@@ -123,6 +124,10 @@ struct TodoEdit: View {
                     }
                 }
             }
+            .sheet(isPresented: $showColorPicker) {
+                TodoColorPicker(color: $viewModel.todoColor)
+                    .presentationDetents([.height(250)])
+            }
         }
     }
     
@@ -174,10 +179,11 @@ struct TodoEdit: View {
             
             Spacer()
             
-            ColorPicker("", selection: $viewModel.todoColor)
-            
             // TODO: Custom one
-            // TodoColorPickerLabel(color: viewModel.todoColor)
+             TodoColorPickerLabel(color: viewModel.todoColor)
+                .onTapGesture {
+                    showColorPicker.toggle()
+                }
         }
     }
     

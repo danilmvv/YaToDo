@@ -13,6 +13,7 @@
 		3C4EB70F2C2EC642000B7F6A /* Color+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB70E2C2EC642000B7F6A /* Color+Random.swift */; };
 		3C4EB7122C2ECBC8000B7F6A /* TodoColorPickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB7112C2ECBC8000B7F6A /* TodoColorPickerLabel.swift */; };
 		3C4EB71C2C2F3F09000B7F6A /* Color+isDark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB71B2C2F3F09000B7F6A /* Color+isDark.swift */; };
+		3C4EB7232C2F96F7000B7F6A /* TodoColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB7222C2F96F7000B7F6A /* TodoColorPicker.swift */; };
 		3C92060E2C256878002A8272 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92060D2C256878002A8272 /* TodoItem.swift */; };
 		3C9206122C256895002A8272 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206112C256895002A8272 /* FileCache.swift */; };
 		3C9206242C25ECE2002A8272 /* TodoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9206232C25ECE2002A8272 /* TodoItemTests.swift */; };
@@ -48,6 +49,7 @@
 		3C4EB70E2C2EC642000B7F6A /* Color+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Random.swift"; sourceTree = "<group>"; };
 		3C4EB7112C2ECBC8000B7F6A /* TodoColorPickerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColorPickerLabel.swift; sourceTree = "<group>"; };
 		3C4EB71B2C2F3F09000B7F6A /* Color+isDark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+isDark.swift"; sourceTree = "<group>"; };
+		3C4EB7222C2F96F7000B7F6A /* TodoColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColorPicker.swift; sourceTree = "<group>"; };
 		3C92060D2C256878002A8272 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		3C9206112C256895002A8272 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		3C92061A2C25ECC0002A8272 /* YaToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YaToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +100,7 @@
 		3C4EB7132C2EDACC000B7F6A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				3C4EB7222C2F96F7000B7F6A /* TodoColorPicker.swift */,
 				3C4EB7112C2ECBC8000B7F6A /* TodoColorPickerLabel.swift */,
 			);
 			path = Components;
@@ -336,6 +339,7 @@
 				3C4EB71C2C2F3F09000B7F6A /* Color+isDark.swift in Sources */,
 				3C4EB7092C2BF1D9000B7F6A /* Date+Formatting.swift in Sources */,
 				3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */,
+				3C4EB7232C2F96F7000B7F6A /* TodoColorPicker.swift in Sources */,
 				3C9A2B912C2B3012007CD7F8 /* TodoItem+JSON.swift in Sources */,
 				3C9A2B9B2C2B4240007CD7F8 /* TodoRow.swift in Sources */,
 				3C92060E2C256878002A8272 /* TodoItem.swift in Sources */,
