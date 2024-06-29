@@ -28,7 +28,9 @@ final class FileCache {
     func deleteTodo(_ id: String) {
         todos.removeAll { $0.id == id }
     }
-    
+}
+
+extension FileCache {
     func saveJSON(filename: String) throws {
         let fileURL = try getFileURL(filename)
         let jsonItems = todos.map({ $0.json })
