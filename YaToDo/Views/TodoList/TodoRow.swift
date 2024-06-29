@@ -25,7 +25,6 @@ struct TodoRow: View {
     
     var body: some View {
         HStack {
-            
             // Done Button
             Button {
                 withAnimation {
@@ -42,6 +41,8 @@ struct TodoRow: View {
                     .clipShape(Circle())
                     .frame(maxWidth: 24, maxHeight: .infinity)
                     .contentShape(Rectangle())
+                    .padding(.leading)
+                    .padding(.trailing, 8)
                 
             }
             .buttonStyle(.plain)
@@ -80,6 +81,14 @@ struct TodoRow: View {
                     .foregroundColor(.secondary)
                 }
             }
+            .padding(.vertical, 8)
+                
+            
+            Spacer()
+            
+            Rectangle()
+                .fill(Color.fromHexString(todo.color))
+                .frame(width: 5)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())

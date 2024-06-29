@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct TodoItem: Identifiable, Equatable {
+struct TodoItem: Identifiable, Equatable, Hashable {
     let id: String
     let text: String
     let priority: Priority

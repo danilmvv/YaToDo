@@ -93,6 +93,7 @@ final class ModelData {
         let updatedTodo = TodoItem(id: todo.id,
                                    text: todo.text,
                                    priority: todo.priority,
+                                   color: todo.color,
                                    deadline: todo.deadline,
                                    isDone: !todo.isDone,
                                    dateCreated: todo.dateCreated,

@@ -10,8 +10,12 @@ import SwiftUI
 struct TodoEdit: View {
     @Environment(ModelData.self) private var modelData
     @Environment(\.dismiss) var dismiss
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     @State var viewModel: ViewModel
+    
+    @State private var sheetHeight: CGFloat = .zero
     @State private var showCalendar = false
     
     enum Field {
@@ -21,38 +25,68 @@ struct TodoEdit: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    todoTextField
-                }
+            VStack {
                 
-                Section {
-                    priorityPicker
-                    colorPicker
-                    deadlineToggle
-                    if showCalendar && viewModel.hasDeadline {
-                        deadlineCalendar
+                // portrait
+                if horizontalSizeClass == .compact && verticalSizeClass == .regular {
+                    Form {
+                        Section {
+                            todoTextField
+                        }
+                        
+                        Section {
+                            priorityPicker
+                            colorPicker
+                            deadlineToggle
+                            if showCalendar && viewModel.hasDeadline {
+                                deadlineCalendar
+                            }
+                        }
+                        
+                        
+                        /*
+                         
+                         В макете кнопка "удалить" – disabled, при создании новой тудушки,
+                         но я ее убрал полностью, потому что мне кажется это более логичным.
+                         
+                         Но если убрать if, то кнопка будет как в макете.
+                         
+                         */
+                        
+                        if viewModel.todo != nil {
+                            Section {
+                                deleteButton
+                            }
+                        }
                     }
-                }
-                .onChange(of: viewModel.hasDeadline) {
-                    if !viewModel.hasDeadline {
-                        showCalendar = false
+                    .animation(.default, value: focusedField)
+                } else {
+                    HStack(spacing: 0) {
+                        Form {
+                            Section {
+                                todoTextField
+                            }
+                        }
+                        
+                        if focusedField == nil {
+                            Form {
+                                Section {
+                                    priorityPicker
+                                    colorPicker
+                                    deadlineToggle
+                                    if showCalendar && viewModel.hasDeadline {
+                                        deadlineCalendar
+                                    }
+                                    
+                                    if viewModel.todo != nil {
+                                        deleteButton
+                                    }
+                                }
+                            }
+                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .opacity))
+                        }
                     }
-                }
-                
-                /*
-                 
-                 В макете кнопка "удалить" – disabled, при создании новой тудушки,
-                 но я ее убрал полностью, потому что мне кажется это более логичным.
-                 
-                 Но если убрать if, то кнопка будет как в макете.
-                 
-                 */
-                
-                if viewModel.todo != nil {
-                    Section {
-                        deleteButton
-                    }
+                    .animation(.default, value: focusedField)
                 }
             }
             .listSectionSpacing(16)
@@ -82,7 +116,9 @@ struct TodoEdit: View {
                     HStack {
                         Spacer()
                         Button("Готово") {
-                            focusedField = nil
+                            withAnimation {
+                                focusedField = nil
+                            }
                         }
                     }
                 }
@@ -91,10 +127,19 @@ struct TodoEdit: View {
     }
     
     private var todoTextField: some View {
-        TextField("Что надо сделать?", text: $viewModel.todoText, axis: .vertical)
-            .padding(.vertical, 5)
-            .lineLimit(3...)
-            .focused($focusedField, equals: .text)
+        ZStack(alignment: .trailing) {
+            TextField("Что надо сделать?", text: $viewModel.todoText, axis: .vertical)
+//                .padding(.vertical, 5)
+                .lineLimit(3...)
+                .focused($focusedField, equals: .text)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+            
+            Rectangle()
+                .fill(viewModel.todoColor)
+                .frame(width: 8)
+        }
+        .listRowInsets(EdgeInsets())
     }
     
     private var priorityPicker: some View {
@@ -102,7 +147,6 @@ struct TodoEdit: View {
             Text("Важность")
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            // TODO: Make a custom picker
             Picker("", selection: $viewModel.todoPriority) {
                 ForEach(TodoItem.Priority.allCases, id: \.self) { priority in
                     if priority == .important {
@@ -129,13 +173,11 @@ struct TodoEdit: View {
             Text("Цвет")
             
             Spacer()
-                    
             
-            // TODO: Color Picker
-            Image(systemName: "circle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 20)
+            ColorPicker("", selection: $viewModel.todoColor)
+            
+            // TODO: Custom one
+            // TodoColorPickerLabel(color: viewModel.todoColor)
         }
     }
     
@@ -153,7 +195,9 @@ struct TodoEdit: View {
                         Text(viewModel.todoDeadline.formattedDayMonthYear())
                             .font(.subheadline)
                             .fontWeight(.semibold)
+                            .foregroundStyle(.accent)
                     }
+                    .buttonStyle(.plain)
                 }
             }
             .frame(height: 40)
@@ -163,6 +207,11 @@ struct TodoEdit: View {
             
             Toggle("Дедлайн", isOn: $viewModel.hasDeadline)
                 .labelsHidden()
+                .onChange(of: viewModel.hasDeadline) {
+                    if !viewModel.hasDeadline {
+                        showCalendar = false
+                    }
+                }
         }
     }
     
