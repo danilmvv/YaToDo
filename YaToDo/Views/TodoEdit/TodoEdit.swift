@@ -134,7 +134,6 @@ struct TodoEdit: View {
     private var todoTextField: some View {
         ZStack(alignment: .trailing) {
             TextField("Что надо сделать?", text: $viewModel.todoText, axis: .vertical)
-//                .padding(.vertical, 5)
                 .lineLimit(3...)
                 .focused($focusedField, equals: .text)
                 .padding(.horizontal, 20)
@@ -176,11 +175,11 @@ struct TodoEdit: View {
     private var colorPicker: some View {
         HStack {
             Text("Цвет")
-            
             Spacer()
             
-            // TODO: Custom one
-             TodoColorPickerLabel(color: viewModel.todoColor)
+//            ColorPicker("", selection: $viewModel.todoColor)
+            
+            TodoColorPickerLabel(color: viewModel.todoColor)
                 .onTapGesture {
                     showColorPicker.toggle()
                 }

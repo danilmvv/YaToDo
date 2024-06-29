@@ -73,6 +73,8 @@ struct TodoColorPicker: View {
             .onChange(of: brightness) {
                 updateColor()
             }
+            
+            // TODO: Optimize updates
         }
     }
     

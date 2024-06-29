@@ -28,7 +28,7 @@ final class ModelData {
         
         switch filter {
         case .date:
-            return filtered.sorted { $0.dateCreated > $1.dateCreated }
+            return filtered.sorted { $0.dateCreated < $1.dateCreated }
         case .priority:
             return filtered.sorted { $0.priority > $1.priority }
         }
@@ -88,6 +88,7 @@ final class ModelData {
         todos.removeAll { $0.id == id }
     }
     
+    /// Обработка нажатия на кнопку выполнения
     func toggleCompletion(_ todo: TodoItem) {
         guard let index = todos.firstIndex(of: todo) else { return }
         let updatedTodo = TodoItem(id: todo.id,

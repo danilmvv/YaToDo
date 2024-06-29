@@ -14,6 +14,12 @@ struct TodoList: View {
     
     @State private var showAddTodoView = false
     @State private var selectedTodo: TodoItem?
+    @State private var newTodoText: String = ""
+    
+    enum Field {
+        case text
+    }
+    @FocusState private var focusedField: Field?
     
     var body: some View {
         @Bindable var modelData = modelData
@@ -72,11 +78,24 @@ struct TodoList: View {
                                 Label("Фильтр", systemImage: "ellipsis.circle")
                             }
                         }
+                        
+                        ToolbarItem(placement: .keyboard) {
+                            HStack {
+                                Spacer()
+                                Button("Готово") {
+                                    withAnimation {
+                                        focusedField = nil
+                                    }
+                                }
+                            }
+                        }
                     }
             }
         }
     }
     
+    
+    // Compact UI
     private var compactSection: some View {
         ZStack {
             if !modelData.todos.isEmpty {
@@ -114,6 +133,17 @@ struct TodoList: View {
                                     }
                                     .listRowInsets(EdgeInsets())
                             }
+                            
+                            TextField("Новое", text: $newTodoText, axis: .vertical)
+                                .focused($focusedField, equals: .text)
+                                .padding(.leading)
+                                .padding(.vertical, 8)
+                                .onChange(of: focusedField) {
+                                    if focusedField == nil && !newTodoText.isEmpty {
+                                        modelData.addTodo(TodoItem(text: newTodoText))
+                                        newTodoText = ""
+                                    }
+                                }
                         } header: {
                             Text("Выполнено – \(modelData.todos.filter { $0.isDone }.count)")
                         }
@@ -152,6 +182,7 @@ struct TodoList: View {
         }
     }
     
+    // Big UI
     private var regularSection: some View {
         ZStack {
             if !modelData.todos.isEmpty {

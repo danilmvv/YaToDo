@@ -47,6 +47,7 @@ struct TodoRow: View {
             }
             .buttonStyle(.plain)
             .contentTransition(.symbolEffect(.replace))
+            .sensoryFeedback(.impact(weight: .medium), trigger: todo.isDone)
             
             VStack(alignment: .leading) {
                 HStack(spacing: 4) {
@@ -82,7 +83,6 @@ struct TodoRow: View {
                 }
             }
             .padding(.vertical, 8)
-                
             
             Spacer()
             
