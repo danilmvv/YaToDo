@@ -153,15 +153,12 @@ struct TodoEdit: View {
             
             Picker("", selection: $viewModel.todoPriority) {
                 ForEach(TodoItem.Priority.allCases, id: \.self) { priority in
-                    if priority == .important {
-                        Text("‼")
-                            .tag(priority)
-                    } else if priority != .basic {
-                        Image(systemName: priority.icon)
+                    if priority != .basic {
+                        Image(priority.icon)
                             .tag(priority)
                     }
                     else {
-                        Text("нет")
+                        Text(priority.icon)
                             .tag(priority)
                     }
                 }
