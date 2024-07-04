@@ -7,16 +7,38 @@
 
 import SwiftUI
 
-struct TodoCalendar: UIViewControllerRepresentable {
-    var todos: [TodoItem]
+struct TodoCalendar: View {
+    @Environment(ModelData.self) var modelData
+    @State private var showAddTodoView = false
     
-    func makeUIViewController(context: Context) -> TodoCalendarViewController {
-        let viewController = TodoCalendarViewController()
-        viewController.todos = todos
-        return viewController
+    var body: some View {
+        ZStack {
+            TodoCalendarRepresentable(todos: modelData.todos)
+                .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                Button {
+                    showAddTodoView = true
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 44)
+                        .background(.white)
+                        .clipShape(Circle())
+                        .shadow(radius: 8)
+                        .foregroundStyle(.accent)
+                }
+            }
+        }
+        .sheet(isPresented: $showAddTodoView) {
+            TodoEdit(viewModel: TodoEdit.ViewModel())
+        }
+        
     }
-    
-    func updateUIViewController(_ uiViewController: TodoCalendarViewController, context: Context) {
-        uiViewController.todos = todos
-    }
+}
+
+#Preview {
+    TodoCalendar()
 }

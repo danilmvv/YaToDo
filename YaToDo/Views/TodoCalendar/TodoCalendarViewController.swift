@@ -50,8 +50,6 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
         return view
     }()
     
-    private var isScrollingTableView = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +80,7 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
             tableView.topAnchor.constraint(equalTo: dividerView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -106,6 +104,7 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
         tableView.reloadData()
     }
 }
+
 
 extension TodoCalendarViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -141,12 +140,14 @@ extension TodoCalendarViewController: UITableViewDataSource {
     }
 }
 
+
 extension TodoCalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = indexPath.item
         tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: false)
     }
 }
+
 
 extension TodoCalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

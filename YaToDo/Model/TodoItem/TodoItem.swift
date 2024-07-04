@@ -38,11 +38,11 @@ struct TodoItem: Identifiable, Equatable, Hashable {
         var icon: String {
             switch self {
             case .low:
-                return "low"
+                return "arrow.down"
             case .basic:
                 return "нет"
             case .important:
-                return "high"
+                return "exclamationmark.2"
             }
         }
     }

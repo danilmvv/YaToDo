@@ -59,7 +59,7 @@ struct TodoList: View {
                     Spacer()
                 }
             }
-        } 
+        }
         
         else {
             NavigationStack {
@@ -68,13 +68,11 @@ struct TodoList: View {
                     .toolbar {
                         ToolbarItem {
                             NavigationLink {
-                                TodoCalendar(todos: modelData.todos)
+                                TodoCalendar()
                                     .navigationTitle("Календарь")
                                     .navigationBarTitleDisplayMode(.inline)
                                     .toolbarBackground(Color(UIColor.secondarySystemBackground), for: .navigationBar)
                                     .toolbarBackground(.visible, for: .navigationBar)
-                                    .ignoresSafeArea()
-                                
                             } label: {
                                 Image(systemName: "calendar")
                             }
