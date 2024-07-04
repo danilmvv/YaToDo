@@ -59,11 +59,23 @@ struct TodoList: View {
                     Spacer()
                 }
             }
-        } else {
+        } 
+        
+        else {
             NavigationStack {
                 compactSection
                     .navigationTitle("Мои дела")
                     .toolbar {
+                        ToolbarItem {
+                            NavigationLink {
+                                TodoCalendar(todos: modelData.todos)
+                                    .navigationTitle("Календарь")
+                                    .navigationBarTitleDisplayMode(.inline)
+                            } label: {
+                                Image(systemName: "calendar")
+                            }
+                        }
+                        
                         ToolbarItem {
                             Menu {
                                 Picker("Категория", selection: $modelData.filter) {

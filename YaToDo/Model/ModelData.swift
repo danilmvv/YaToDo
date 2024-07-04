@@ -36,44 +36,7 @@ final class ModelData {
     
     // Моковые данные для теста UI и Observable
     init() {
-        let currentDate = Date()
-        let oneDay: TimeInterval = 86400
-        
-        todos = [
-            TodoItem(
-                id: "123",
-                text: "Купить что-то",
-                dateCreated: currentDate.addingTimeInterval(-1 * oneDay)
-            ),
-            TodoItem(
-                text: "Купить что-то, где-то, зачем-то, но зачем не очень понятно",
-                dateCreated: currentDate.addingTimeInterval(-2 * oneDay)
-            ),
-            TodoItem(
-                text: "Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обрезается многоточие бла бла бла бла бла",
-                dateCreated: currentDate.addingTimeInterval(-3 * oneDay)
-            ),
-            TodoItem(
-                text: "Купить что-то",
-                priority: .low,
-                dateCreated: currentDate.addingTimeInterval(-4 * oneDay)
-            ),
-            TodoItem(
-                text: "Купить что-то",
-                priority: .important,
-                dateCreated: currentDate.addingTimeInterval(-5 * oneDay)
-            ),
-            TodoItem(
-                text: "Купить что-то",
-                isDone: true,
-                dateCreated: currentDate.addingTimeInterval(-6 * oneDay)
-            ),
-            TodoItem(
-                text: "Задание",
-                deadline: currentDate.addingTimeInterval(86400),
-                dateCreated: currentDate.addingTimeInterval(-7 * oneDay)
-            )
-        ]
+        todos = MockData.todos
     }
     
     func addTodo(_ todo: TodoItem) {
