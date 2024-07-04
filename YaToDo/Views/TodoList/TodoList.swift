@@ -71,6 +71,8 @@ struct TodoList: View {
                                 TodoCalendar(todos: modelData.todos)
                                     .navigationTitle("Календарь")
                                     .navigationBarTitleDisplayMode(.inline)
+                                    .ignoresSafeArea()
+                                
                             } label: {
                                 Image(systemName: "calendar")
                             }
