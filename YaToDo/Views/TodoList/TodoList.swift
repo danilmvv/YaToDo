@@ -71,6 +71,8 @@ struct TodoList: View {
                                 TodoCalendar(todos: modelData.todos)
                                     .navigationTitle("Календарь")
                                     .navigationBarTitleDisplayMode(.inline)
+                                    .toolbarBackground(Color(UIColor.secondarySystemBackground), for: .navigationBar)
+                                    .toolbarBackground(.visible, for: .navigationBar)
                                     .ignoresSafeArea()
                                 
                             } label: {
