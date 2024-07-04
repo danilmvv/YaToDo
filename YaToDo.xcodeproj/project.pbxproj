@@ -200,9 +200,9 @@
 		3CA19E7D2C36747500A28319 /* TodoCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				3CA19E8D2C371F2800A28319 /* TodoCalendar.swift */,
 				3CA19E802C367CE200A28319 /* TodoCalendarRepresentable.swift */,
 				3CA19E7E2C367BF800A28319 /* TodoCalendarViewController.swift */,
-				3CA19E8D2C371F2800A28319 /* TodoCalendar.swift */,
 				3CA19E8B2C36CCC900A28319 /* DateCell.swift */,
 			);
 			path = TodoCalendar;

@@ -7,6 +7,11 @@
 
 import UIKit
 import SwiftUI
+import Combine
+
+protocol TodoListViewControllerDelegate: AnyObject {
+    func didMarkTodoAsDone(_ todo: TodoItem)
+}
 
 class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     var todos: [TodoItem] = []
@@ -14,7 +19,8 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     var sectionTitles: [String] = []
     var sections: [Date?] = []
     
-    private var selectedSectionIndex: Int?
+    weak var delegate: TodoListViewControllerDelegate?
+    private var cancellables: Set<AnyCancellable> = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -101,7 +107,6 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
             $0 != nil ? $0!.formattedDayMonth() : "Другое"
         }
         
-        tableView.reloadData()
     }
 }
 
@@ -122,11 +127,52 @@ extension TodoCalendarViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let sectionTitle = sections[indexPath.section]
-        if let todo = grouped[sectionTitle]?[indexPath.row] {
-            cell.textLabel?.text = todo.text
+        let sectionDate = sections[indexPath.section]
+        if let todo = grouped[sectionDate]?[indexPath.row] {
+            configureCell(cell, with: todo)
         }
+        
+        addSwipeGestures(to: cell, at: indexPath)
+        
         return cell
+    }
+    
+    private func configureCell(_ cell: UITableViewCell, with todo: TodoItem) {
+        let text = todo.text
+        if todo.isDone {
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+            attributeString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.gray, range: NSMakeRange(0, attributeString.length))
+            cell.textLabel?.attributedText = attributeString
+        } else {
+            cell.textLabel?.text = text
+            cell.textLabel?.textColor = .black
+        }
+    }
+    
+    private func addSwipeGestures(to cell: UITableViewCell, at indexPath: IndexPath) {
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        leftSwipe.direction = .left
+        cell.addGestureRecognizer(leftSwipe)
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        rightSwipe.direction = .right
+        cell.addGestureRecognizer(rightSwipe)
+    }
+    
+    @objc private func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        guard let cell = gesture.view as? UITableViewCell,
+              let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        let sectionDate = sections[indexPath.section]
+        guard var todo = grouped[sectionDate]?[indexPath.row] else { return }
+        
+        if gesture.direction == .left && todo.isDone {
+            delegate?.didMarkTodoAsDone(todo)
+        } else if gesture.direction == .right && !todo.isDone {
+            delegate?.didMarkTodoAsDone(todo)
+        }
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

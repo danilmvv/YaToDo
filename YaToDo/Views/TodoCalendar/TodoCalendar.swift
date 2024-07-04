@@ -13,7 +13,7 @@ struct TodoCalendar: View {
     
     var body: some View {
         ZStack {
-            TodoCalendarRepresentable(todos: modelData.todos)
+            TodoCalendarRepresentable(modelData: modelData)
                 .ignoresSafeArea()
             
             VStack {
