@@ -55,9 +55,9 @@ struct TodoRow: View {
                     // Priority Label
                     if todo.priority != .basic && !isDone {
                         Image(
-                            systemName: todo.priority == .low
-                            ? "arrow.down"
-                            : "exclamationmark.2"
+                            todo.priority == .low
+                            ? "low"
+                            : "high"
                         )
                         .frame(minWidth: 16)
                         .foregroundColor(todo.priority == .low ? .secondary : .red)

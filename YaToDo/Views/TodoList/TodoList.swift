@@ -28,6 +28,7 @@ struct TodoList: View {
         if horizontalSizeClass == .regular && verticalSizeClass == .regular {
             NavigationSplitView {
                 regularSection
+                    .navigationTitle("Мои дела")
                     .toolbar {
                         ToolbarItem {
                             Menu {
@@ -61,6 +62,7 @@ struct TodoList: View {
         } else {
             NavigationStack {
                 compactSection
+                    .navigationTitle("Мои дела")
                     .toolbar {
                         ToolbarItem {
                             Menu {
@@ -173,7 +175,6 @@ struct TodoList: View {
                 }
             }
         }
-        .navigationTitle("Мои Дела")
         .sheet(item: $selectedTodo) { todo in
             TodoEdit(viewModel: TodoEdit.ViewModel(todo: todo))
         }
@@ -226,10 +227,7 @@ struct TodoList: View {
                 }
             }
         }
-        .navigationTitle("Мои Дела")
     }
-    
-    
 }
 
 #Preview {
