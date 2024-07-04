@@ -10,8 +10,9 @@ import SwiftUI
 
 class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     var todos: [TodoItem] = []
-    var grouped: [String: [TodoItem]] = [:]
+    var grouped: [Date?: [TodoItem]] = [:]
     var sectionTitles: [String] = []
+    var sections: [Date?] = []
     
     private var selectedSectionIndex: Int?
     
@@ -51,12 +52,21 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
 
 extension TodoCalendarViewController {
     func groupTodos() {
-        grouped = Dictionary(grouping: todos) { todo in
-            todo.deadline != nil ? todo.deadline!.formattedDayMonth() : "Другое"
+        grouped = Dictionary(grouping: todos, by: { $0.deadline?.startOfDay })
+        
+        sections = grouped.keys.sorted {
+            if let first = $0, let second = $1 {
+                return first < second
+            } else if $0 == nil {
+                return false
+            } else {
+                return true
+            }
         }
         
-        sectionTitles = grouped.keys.sorted()
-        grouped = grouped.mapValues { $0.sorted(by: { $0.dateCreated < $1.dateCreated }) }
+        sectionTitles = sections.map {
+            $0 != nil ? $0!.formattedDayMonth() : "Другое"
+        }
         
         tableView.reloadData()
     }
@@ -73,12 +83,13 @@ extension TodoCalendarViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionTitle = sectionTitles[section]
-        return grouped[sectionTitle]?.count ?? 0
+        let sectionDate = sections[section]
+        return grouped[sectionDate]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let sectionTitle = sectionTitles[indexPath.section]
+        let sectionTitle = sections[indexPath.section]
         if let todo = grouped[sectionTitle]?[indexPath.row] {
             cell.textLabel?.text = todo.text
         }
