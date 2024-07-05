@@ -9,6 +9,10 @@ import UIKit
 import SwiftUI
 import Combine
 
+protocol TodoCalendarViewControllerDelegate: AnyObject {
+    func didMarkTodoAsDone(_ todo: TodoItem)
+}
+
 class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     var todos: [TodoItem] = [] {
         didSet {
@@ -19,6 +23,8 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     var grouped: [Date?: [TodoItem]] = [:]
     var sectionTitles: [String] = []
     var sections: [Date?] = []
+    
+    weak var delegate: TodoCalendarViewControllerDelegate?
         
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -171,12 +177,9 @@ extension TodoCalendarViewController: UITableViewDataSource {
         let sectionDate = sections[indexPath.section]
         guard var todo = grouped[sectionDate]?[indexPath.row] else { return }
         
-        if gesture.direction == .left && todo.isDone {
-            print("done")
-        } else if gesture.direction == .right && !todo.isDone {
-            print("not done")
+        if (gesture.direction == .left && todo.isDone) || (gesture.direction == .right && !todo.isDone) {
+            delegate?.didMarkTodoAsDone(todo)
         }
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
