@@ -9,19 +9,17 @@ import UIKit
 import SwiftUI
 import Combine
 
-protocol TodoListViewControllerDelegate: AnyObject {
-    func didMarkTodoAsDone(_ todo: TodoItem)
-}
-
 class TodoCalendarViewController: UIViewController, UITableViewDelegate {
-    var todos: [TodoItem] = []
+    var todos: [TodoItem] = [] {
+        didSet {
+            groupTodos()
+        }
+    }
+    
     var grouped: [Date?: [TodoItem]] = [:]
     var sectionTitles: [String] = []
     var sections: [Date?] = []
-    
-    weak var delegate: TodoListViewControllerDelegate?
-    private var cancellables: Set<AnyCancellable> = []
-    
+        
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,6 +89,10 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     }
     
     func groupTodos() {
+        grouped.removeAll()
+        sectionTitles.removeAll()
+        sections.removeAll()
+        
         grouped = Dictionary(grouping: todos, by: { $0.deadline?.startOfDay })
         
         sections = grouped.keys.sorted {
@@ -107,6 +109,7 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
             $0 != nil ? $0!.formattedDayMonth() : "Другое"
         }
         
+        tableView.reloadData()
     }
 }
 
@@ -140,13 +143,14 @@ extension TodoCalendarViewController: UITableViewDataSource {
     private func configureCell(_ cell: UITableViewCell, with todo: TodoItem) {
         let text = todo.text
         if todo.isDone {
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
-            attributeString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.gray, range: NSMakeRange(0, attributeString.length))
-            cell.textLabel?.attributedText = attributeString
+            let attributedString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+            attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.gray, range: NSMakeRange(0, attributedString.length))
+            cell.textLabel?.attributedText = attributedString
         } else {
-            cell.textLabel?.text = text
-            cell.textLabel?.textColor = .black
+            let attributedString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSMakeRange(0, attributedString.length))
+            cell.textLabel?.attributedText = attributedString
         }
     }
     
@@ -168,9 +172,9 @@ extension TodoCalendarViewController: UITableViewDataSource {
         guard var todo = grouped[sectionDate]?[indexPath.row] else { return }
         
         if gesture.direction == .left && todo.isDone {
-            delegate?.didMarkTodoAsDone(todo)
+            print("done")
         } else if gesture.direction == .right && !todo.isDone {
-            delegate?.didMarkTodoAsDone(todo)
+            print("not done")
         }
         
     }
