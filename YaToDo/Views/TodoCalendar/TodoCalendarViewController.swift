@@ -29,10 +29,9 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(TodoItemCell.self, forCellReuseIdentifier: TodoItemCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.contentInset.bottom = 44
         return tableView
     }()
@@ -94,11 +93,7 @@ class TodoCalendarViewController: UIViewController, UITableViewDelegate {
         ])
     }
     
-    func groupTodos() {
-        grouped.removeAll()
-        sectionTitles.removeAll()
-        sections.removeAll()
-        
+    func groupTodos() {        
         grouped = Dictionary(grouping: todos, by: { $0.deadline?.startOfDay })
         
         sections = grouped.keys.sorted {
@@ -135,7 +130,7 @@ extension TodoCalendarViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TodoItemCell.reuseIdentifier, for: indexPath) as! TodoItemCell
         let sectionDate = sections[indexPath.section]
         if let todo = grouped[sectionDate]?[indexPath.row] {
             configureCell(cell, with: todo)
@@ -146,18 +141,18 @@ extension TodoCalendarViewController: UITableViewDataSource {
         return cell
     }
     
-    private func configureCell(_ cell: UITableViewCell, with todo: TodoItem) {
+    private func configureCell(_ cell: TodoItemCell, with todo: TodoItem) {
         let text = todo.text
+        let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: text)
+        
         if todo.isDone {
-            let attributedString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
             attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributedString.length))
             attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.gray, range: NSMakeRange(0, attributedString.length))
-            cell.textLabel?.attributedText = attributedString
         } else {
-            let attributedString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
             attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSMakeRange(0, attributedString.length))
-            cell.textLabel?.attributedText = attributedString
         }
+        
+        cell.configure(with: attributedString, categoryColor: UIColor(todo.category.color))
     }
     
     private func addSwipeGestures(to cell: UITableViewCell, at indexPath: IndexPath) {
@@ -175,7 +170,7 @@ extension TodoCalendarViewController: UITableViewDataSource {
               let indexPath = tableView.indexPath(for: cell) else { return }
         
         let sectionDate = sections[indexPath.section]
-        guard var todo = grouped[sectionDate]?[indexPath.row] else { return }
+        guard let todo = grouped[sectionDate]?[indexPath.row] else { return }
         
         if (gesture.direction == .left && todo.isDone) || (gesture.direction == .right && !todo.isDone) {
             delegate?.didMarkTodoAsDone(todo)

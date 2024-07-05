@@ -12,6 +12,7 @@ class DateCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.numberOfLines = 2
         return label
     }()
     
@@ -27,8 +28,6 @@ class DateCell: UICollectionViewCell {
         ])
         
         contentView.layer.cornerRadius = 8
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     required init?(coder: NSCoder) {
@@ -37,6 +36,8 @@ class DateCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
+            contentView.layer.borderWidth = isSelected ? 1 : 0
+            contentView.layer.borderColor = isSelected ? UIColor.gray.cgColor : UIColor.clear.cgColor
             contentView.backgroundColor = isSelected ? UIColor.lightGray : UIColor.clear
         }
     }

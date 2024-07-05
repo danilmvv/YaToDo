@@ -28,6 +28,7 @@ struct MockData {
         TodoItem(
             text: "Купить что-то",
             priority: .low,
+            category: .study,
             deadline: Date().addingTimeInterval(2 * 86400),
             dateCreated: Date().addingTimeInterval(-4 * 86400)
         ),
@@ -57,12 +58,14 @@ struct MockData {
         ),
         TodoItem(
             text: "Купить что-то",
+            category: .work,
             deadline: Date().addingTimeInterval(5 * 86400),
             isDone: true,
             dateCreated: Date().addingTimeInterval(-9 * 86400)
         ),
         TodoItem(
             text: "Задание",
+            category: .hobbies,
             deadline: Date().addingTimeInterval(86400),
             dateCreated: Date().addingTimeInterval(-10 * 86400)
         ),
