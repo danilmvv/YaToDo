@@ -54,11 +54,7 @@ struct TodoRow: View {
                     
                     // Priority Label
                     if todo.priority != .basic && !isDone {
-                        Image(
-                            todo.priority == .low
-                            ? "low"
-                            : "high"
-                        )
+                        Image(systemName: todo.priority.icon)
                         .frame(minWidth: 16)
                         .foregroundColor(todo.priority == .low ? .secondary : .red)
                         .fontWeight(.bold)

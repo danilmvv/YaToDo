@@ -192,9 +192,7 @@ struct TodoEdit: View {
         HStack {
             Text("Цвет")
             Spacer()
-            
-            //            ColorPicker("", selection: $viewModel.todoColor)
-            
+                        
             TodoColorPickerLabel(color: viewModel.todoColor)
                 .onTapGesture {
                     showColorPicker.toggle()

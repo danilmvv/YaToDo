@@ -122,14 +122,6 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		3C4EB7162C2EDD11000B7F6A /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				3C4EB7072C2BF133000B7F6A /* Extensions */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		3C4EB71D2C2F3F0C000B7F6A /* Color */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				3C9A2B982C2B4235007CD7F8 /* TodoList.swift */,
-				3C9A2B9A2C2B4240007CD7F8 /* TodoRow.swift */,
+				3CA19EBF2C38F1F700A28319 /* Components */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";
@@ -247,6 +239,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		3CA19EBF2C38F1F700A28319 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3C9A2B9A2C2B4240007CD7F8 /* TodoRow.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		3CF661912C2085CC00BD719F = {
 			isa = PBXGroup;
 			children = (
@@ -272,7 +272,7 @@
 				3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */,
 				3C8FD9382C29D10E00AB4C4A /* Views */,
 				3C8FD9372C29D10400AB4C4A /* Model */,
-				3C4EB7162C2EDD11000B7F6A /* Helpers */,
+				3C4EB7072C2BF133000B7F6A /* Extensions */,
 				3CF661A12C2085CE00BD719F /* Assets.xcassets */,
 				3CF661A32C2085CE00BD719F /* Preview Content */,
 			);
