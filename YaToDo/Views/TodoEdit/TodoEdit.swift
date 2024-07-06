@@ -37,6 +37,7 @@ struct TodoEdit: View {
                         
                         Section {
                             priorityPicker
+                            categoryPicker
                             colorPicker
                             deadlineToggle
                             if showCalendar && viewModel.hasDeadline {
@@ -154,7 +155,7 @@ struct TodoEdit: View {
             Picker("", selection: $viewModel.todoPriority) {
                 ForEach(TodoItem.Priority.allCases, id: \.self) { priority in
                     if priority != .basic {
-                        Image(priority.icon)
+                        Image(systemName: priority.icon)
                             .tag(priority)
                     }
                     else {
@@ -169,12 +170,30 @@ struct TodoEdit: View {
         .padding(.vertical, 4)
     }
     
+    private var categoryPicker: some View {
+        VStack {
+            NavigationLink {
+                CategoryPicker(viewModel: $viewModel)
+            } label: {
+                HStack {
+                    Text("Категория")
+                    Spacer()
+                    
+                    Circle().fill(viewModel.todoCategory.color)
+                        .frame(width: 10)
+                    Text(viewModel.todoCategory.name)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+    
     private var colorPicker: some View {
         HStack {
             Text("Цвет")
             Spacer()
             
-//            ColorPicker("", selection: $viewModel.todoColor)
+            //            ColorPicker("", selection: $viewModel.todoColor)
             
             TodoColorPickerLabel(color: viewModel.todoColor)
                 .onTapGesture {

@@ -59,11 +59,25 @@ struct TodoList: View {
                     Spacer()
                 }
             }
-        } else {
+        }
+        
+        else {
             NavigationStack {
                 compactSection
                     .navigationTitle("Мои дела")
                     .toolbar {
+                        ToolbarItem {
+                            NavigationLink {
+                                TodoCalendar()
+                                    .navigationTitle("Календарь")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .toolbarBackground(Color(UIColor.secondarySystemBackground), for: .navigationBar)
+                                    .toolbarBackground(.visible, for: .navigationBar)
+                            } label: {
+                                Image(systemName: "calendar")
+                            }
+                        }
+                        
                         ToolbarItem {
                             Menu {
                                 Picker("Категория", selection: $modelData.filter) {

@@ -12,6 +12,7 @@ struct TodoItem: Identifiable, Equatable, Hashable {
     let id: String
     let text: String
     let priority: Priority
+    let category: Category
     let color: String
     let deadline: Date?
     let isDone: Bool
@@ -38,19 +39,33 @@ struct TodoItem: Identifiable, Equatable, Hashable {
         var icon: String {
             switch self {
             case .low:
-                return "low"
+                return "arrow.down"
             case .basic:
                 return "нет"
             case .important:
-                return "high"
+                return "exclamationmark.2"
             }
         }
+    }
+    
+    struct Category: Identifiable, Equatable, Hashable {
+        let id: String
+        var name: String
+        var color: Color
+        
+        static let work = Category(id: UUID().uuidString, name: "Работа", color: .red)
+        static let study = Category(id: UUID().uuidString, name: "Учеба", color: .blue)
+        static let hobbies = Category(id: UUID().uuidString, name: "Хобби", color: .green)
+        static let other = Category(id: UUID().uuidString, name: "Другое", color: .clear)
+        
+        static let predefined: [Category] = [.work, .study, .hobbies]
     }
     
     init(
         id: String = UUID().uuidString,
         text: String,
         priority: Priority = .basic,
+        category: Category = .other,
         color: String = Color.random().toHexString(),
         deadline: Date? = nil,
         isDone: Bool = false,
@@ -60,6 +75,7 @@ struct TodoItem: Identifiable, Equatable, Hashable {
         self.id = id
         self.text = text
         self.priority = priority
+        self.category = category
         self.color = color
         self.deadline = deadline
         self.isDone = isDone
