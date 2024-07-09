@@ -25,110 +25,108 @@ struct TodoEdit: View {
     @FocusState private var focusedField: Field?
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                
-                // portrait
-                if horizontalSizeClass == .compact && verticalSizeClass == .regular {
+        VStack {
+            
+            // portrait
+            if horizontalSizeClass == .compact && verticalSizeClass == .regular {
+                Form {
+                    Section {
+                        todoTextField
+                    }
+                    
+                    Section {
+                        priorityPicker
+                        categoryPicker
+                        colorPicker
+                        deadlineToggle
+                        if showCalendar && viewModel.hasDeadline {
+                            deadlineCalendar
+                        }
+                    }
+                    
+                    
+                    /*
+                     
+                     В макете кнопка "удалить" – disabled, при создании новой тудушки,
+                     но я ее убрал полностью, потому что мне кажется это более логичным.
+                     
+                     Но если убрать if, то кнопка будет как в макете.
+                     
+                     */
+                    
+                    if viewModel.todo != nil {
+                        Section {
+                            deleteButton
+                        }
+                    }
+                }
+                .animation(.default, value: focusedField)
+            } else {
+                HStack(spacing: 0) {
                     Form {
                         Section {
                             todoTextField
                         }
-                        
-                        Section {
-                            priorityPicker
-                            categoryPicker
-                            colorPicker
-                            deadlineToggle
-                            if showCalendar && viewModel.hasDeadline {
-                                deadlineCalendar
-                            }
-                        }
-                        
-                        
-                        /*
-                         
-                         В макете кнопка "удалить" – disabled, при создании новой тудушки,
-                         но я ее убрал полностью, потому что мне кажется это более логичным.
-                         
-                         Но если убрать if, то кнопка будет как в макете.
-                         
-                         */
-                        
-                        if viewModel.todo != nil {
-                            Section {
-                                deleteButton
-                            }
-                        }
                     }
-                    .animation(.default, value: focusedField)
-                } else {
-                    HStack(spacing: 0) {
+                    
+                    if focusedField == nil {
                         Form {
                             Section {
-                                todoTextField
-                            }
-                        }
-                        
-                        if focusedField == nil {
-                            Form {
-                                Section {
-                                    priorityPicker
-                                    colorPicker
-                                    deadlineToggle
-                                    if showCalendar && viewModel.hasDeadline {
-                                        deadlineCalendar
-                                    }
-                                    
-                                    if viewModel.todo != nil {
-                                        deleteButton
-                                    }
+                                priorityPicker
+                                colorPicker
+                                deadlineToggle
+                                if showCalendar && viewModel.hasDeadline {
+                                    deadlineCalendar
+                                }
+                                
+                                if viewModel.todo != nil {
+                                    deleteButton
                                 }
                             }
-                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .opacity))
+                        }
+                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .opacity))
+                    }
+                }
+                .animation(.default, value: focusedField)
+            }
+        }
+        .listSectionSpacing(16)
+        .navigationTitle(viewModel.todo == nil ? "Новое дело" : "Дело")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    modelData.addTodo(viewModel.createTodo())
+                    dismiss()
+                } label: {
+                    Text("Сохранить")
+                        .fontWeight(.semibold)
+                }
+                .disabled(viewModel.todoText.isEmpty)
+            }
+            
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Отменить")
+                }
+            }
+            
+            ToolbarItem(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    Button("Готово") {
+                        withAnimation {
+                            focusedField = nil
                         }
                     }
-                    .animation(.default, value: focusedField)
                 }
             }
-            .listSectionSpacing(16)
-            .navigationTitle(viewModel.todo == nil ? "Новое дело" : "Дело")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        modelData.addTodo(viewModel.createTodo())
-                        dismiss()
-                    } label: {
-                        Text("Сохранить")
-                            .fontWeight(.semibold)
-                    }
-                    .disabled(viewModel.todoText.isEmpty)
-                }
-                
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Отменить")
-                    }
-                }
-                
-                ToolbarItem(placement: .keyboard) {
-                    HStack {
-                        Spacer()
-                        Button("Готово") {
-                            withAnimation {
-                                focusedField = nil
-                            }
-                        }
-                    }
-                }
-            }
-            .sheet(isPresented: $showColorPicker) {
-                TodoColorPicker(color: $viewModel.todoColor)
-                    .presentationDetents([.height(250)])
-            }
+        }
+        .sheet(isPresented: $showColorPicker) {
+            TodoColorPicker(color: $viewModel.todoColor)
+                .presentationDetents([.height(250)])
         }
     }
     
@@ -192,7 +190,7 @@ struct TodoEdit: View {
         HStack {
             Text("Цвет")
             Spacer()
-                        
+            
             TodoColorPickerLabel(color: viewModel.todoColor)
                 .onTapGesture {
                     showColorPicker.toggle()
@@ -263,11 +261,15 @@ struct TodoEdit: View {
 }
 
 #Preview {
-    TodoEdit(viewModel: TodoEdit.ViewModel(todo: TodoItem(text: "туду", deadline: Date())))
-        .environment(ModelData())
+    NavigationStack {
+        TodoEdit(viewModel: TodoEdit.ViewModel(todo: TodoItem(text: "туду", deadline: Date())))
+            .environment(ModelData())
+    }
 }
 
 #Preview {
-    TodoEdit(viewModel: TodoEdit.ViewModel())
-        .environment(ModelData())
+    NavigationStack {
+        TodoEdit(viewModel: TodoEdit.ViewModel())
+            .environment(ModelData())
+    }
 }

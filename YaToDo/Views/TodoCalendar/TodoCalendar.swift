@@ -9,6 +9,9 @@ import SwiftUI
 
 struct TodoCalendar: View {
     @Environment(ModelData.self) var modelData
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
     @State private var showAddTodoView = false
     
     var body: some View {
@@ -16,24 +19,29 @@ struct TodoCalendar: View {
             TodoCalendarRepresentable(modelData: modelData)
                 .ignoresSafeArea()
             
-            VStack {
-                Spacer()
-                Button {
-                    showAddTodoView = true
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44)
-                        .background(.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 8)
-                        .foregroundStyle(.accent)
+            // not showing on iPads
+            if !(horizontalSizeClass == .regular && verticalSizeClass == .regular) {
+                VStack {
+                    Spacer()
+                    Button {
+                        showAddTodoView = true
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 44)
+                            .background(.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 8)
+                            .foregroundStyle(.accent)
+                    }
                 }
             }
         }
         .sheet(isPresented: $showAddTodoView) {
-            TodoEdit(viewModel: TodoEdit.ViewModel())
+            NavigationStack {
+                TodoEdit(viewModel: TodoEdit.ViewModel())
+            }
         }
         
     }
@@ -41,4 +49,5 @@ struct TodoCalendar: View {
 
 #Preview {
     TodoCalendar()
+        .environment(ModelData())
 }

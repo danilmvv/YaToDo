@@ -28,25 +28,7 @@ struct TodoList: View {
         if horizontalSizeClass == .regular && verticalSizeClass == .regular {
             NavigationSplitView {
                 regularSection
-                    .navigationTitle("Мои дела")
-                    .toolbar {
-                        ToolbarItem {
-                            Menu {
-                                Picker("Категория", selection: $modelData.filter) {
-                                    ForEach(ModelData.FilterCategory.allCases) { category in
-                                        Text(category.rawValue).tag(category)
-                                    }
-                                }
-                                .pickerStyle(.inline)
-                                
-                                Toggle(isOn: $modelData.showCompleted) {
-                                    Text("Показать выполненные")
-                                }
-                            } label: {
-                                Label("Фильтр", systemImage: "ellipsis.circle")
-                            }
-                        }
-                    }
+                    .modifier(NavBarModifier(filter: $modelData.filter, showCompleted: $modelData.showCompleted))
             } detail: {
                 VStack {
                     Text("<- Выберите тудушку :)")
@@ -64,48 +46,7 @@ struct TodoList: View {
         else {
             NavigationStack {
                 compactSection
-                    .navigationTitle("Мои дела")
-                    .toolbar {
-                        ToolbarItem {
-                            NavigationLink {
-                                TodoCalendar()
-                                    .navigationTitle("Календарь")
-                                    .navigationBarTitleDisplayMode(.inline)
-                                    .toolbarBackground(Color(UIColor.secondarySystemBackground), for: .navigationBar)
-                                    .toolbarBackground(.visible, for: .navigationBar)
-                            } label: {
-                                Image(systemName: "calendar")
-                            }
-                        }
-                        
-                        ToolbarItem {
-                            Menu {
-                                Picker("Категория", selection: $modelData.filter) {
-                                    ForEach(ModelData.FilterCategory.allCases) { category in
-                                        Text(category.rawValue).tag(category)
-                                    }
-                                }
-                                .pickerStyle(.inline)
-                                
-                                Toggle(isOn: $modelData.showCompleted) {
-                                    Text("Показать выполненные")
-                                }
-                            } label: {
-                                Label("Фильтр", systemImage: "ellipsis.circle")
-                            }
-                        }
-                        
-                        ToolbarItem(placement: .keyboard) {
-                            HStack {
-                                Spacer()
-                                Button("Готово") {
-                                    withAnimation {
-                                        focusedField = nil
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    .modifier(NavBarModifier(filter: $modelData.filter, showCompleted: $modelData.showCompleted))
             }
         }
     }
@@ -190,10 +131,14 @@ struct TodoList: View {
             }
         }
         .sheet(item: $selectedTodo) { todo in
-            TodoEdit(viewModel: TodoEdit.ViewModel(todo: todo))
+            NavigationStack {
+                TodoEdit(viewModel: TodoEdit.ViewModel(todo: todo))
+            }
         }
         .sheet(isPresented: $showAddTodoView) {
-            TodoEdit(viewModel: TodoEdit.ViewModel())
+            NavigationStack {
+                TodoEdit(viewModel: TodoEdit.ViewModel())
+            }
         }
     }
     
