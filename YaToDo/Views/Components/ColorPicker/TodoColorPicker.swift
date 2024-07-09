@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TodoColorPicker: View {
     @Binding var color: Color
-    
     @State private var selectedHue: Double = 0.0
     @State private var brightness: Double = 1.0
     

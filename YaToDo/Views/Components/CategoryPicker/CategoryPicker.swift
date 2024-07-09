@@ -64,6 +64,7 @@ struct CategoryPicker: View {
                                 viewModel.customCategoryName = ""
                                 viewModel.customCategoryColor = .random()
                                 isAddingCategory = false
+                                showAlert = false
                             } else {
                                 showAlert = true
                             }

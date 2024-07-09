@@ -8,6 +8,7 @@
 import UIKit
 
 class DateCell: UICollectionViewCell {
+    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

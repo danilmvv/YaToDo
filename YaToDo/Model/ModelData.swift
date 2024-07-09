@@ -10,8 +10,8 @@ import Foundation
 @Observable
 final class ModelData {
     private(set) var todos: [TodoItem] = [] // TODO: rewrite to dictionary
-    private(set) var customCategories: [TodoItem.Category] = []
     
+    private var customCategories: [TodoItem.Category] = []
     var categories: [TodoItem.Category] {
         TodoItem.Category.predefined + customCategories + [TodoItem.Category.other]
     }
