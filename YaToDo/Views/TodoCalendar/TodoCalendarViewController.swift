@@ -130,7 +130,10 @@ extension TodoCalendarViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TodoItemCell.reuseIdentifier, for: indexPath) as! TodoItemCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TodoItemCell.reuseIdentifier, for: indexPath) as? TodoItemCell else {
+            return UITableViewCell()
+        }
+        
         let sectionDate = sections[indexPath.section]
         if let todo = grouped[sectionDate]?[indexPath.row] {
             configureCell(cell, with: todo)
@@ -203,7 +206,9 @@ extension TodoCalendarViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCell", for: indexPath) as! DateCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCell", for: indexPath) as? DateCell else {
+            return UICollectionViewCell()
+        }
         cell.dateLabel.text = sectionTitles[indexPath.item]
         return cell
     }
