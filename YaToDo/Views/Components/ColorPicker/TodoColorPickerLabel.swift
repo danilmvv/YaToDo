@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TodoColorPickerLabel: View {
     var color: Color
-    
+
     var body: some View {
         ZStack {
             Circle()
@@ -26,15 +26,15 @@ struct TodoColorPickerLabel: View {
                                 .red
                             ]
                         ),
-                        
+
                         startPoint: .topTrailing,
                         endPoint: .bottomLeading
                     ),
-                    
+
                     lineWidth: 3
                 )
                 .frame(width: 28, height: 28)
-            
+
             Circle()
                 .fill(color)
                 .frame(width: 18)

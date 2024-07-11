@@ -11,11 +11,11 @@ extension Date {
     func formattedDayMonth() -> String {
         return formatted(with: "d MMMM")
     }
-    
+
     func formattedDayMonthYear() -> String {
         return formatted(with: "d MMMM yyyy")
     }
-    
+
     private func formatted(with format: String) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")

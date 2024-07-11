@@ -12,7 +12,7 @@ extension TodoItem {
         guard let dict = json as? [String: Any] else {
             return nil
         }
-        
+
         // Обязательные поля
         guard let id = dict[CodingKeys.id.rawValue] as? String,
               let text = dict[CodingKeys.text.rawValue] as? String,
@@ -21,29 +21,29 @@ extension TodoItem {
         else {
             return nil
         }
-        
+
         let dateCreated = Date(timeIntervalSince1970: dateCreatedInterval)
-        
+
         // Проверка опциональных полей
         let priorityString = dict[CodingKeys.priority.rawValue] as? String ?? Priority.basic.rawValue
         guard let priority = Priority(rawValue: priorityString) else {
             return nil
         }
-        
+
         let deadline: Date?
         if let deadlineInterval = dict[CodingKeys.deadline.rawValue] as? TimeInterval {
             deadline = Date(timeIntervalSince1970: deadlineInterval)
         } else {
             deadline = nil
         }
-        
+
         let dateModified: Date?
         if let dateModifiedInterval = dict[CodingKeys.dateModified.rawValue] as? TimeInterval {
             dateModified = Date(timeIntervalSince1970: dateModifiedInterval)
         } else {
             dateModified = nil
         }
-        
+
         return TodoItem(
             id: id,
             text: text,
@@ -54,7 +54,7 @@ extension TodoItem {
             dateModified: dateModified
         )
     }
-    
+
     var json: Any {
         var dict: [String: Any] = [
             CodingKeys.id.rawValue: id,
@@ -62,19 +62,19 @@ extension TodoItem {
             CodingKeys.isDone.rawValue: isDone,
             CodingKeys.dateCreated.rawValue: dateCreated.timeIntervalSince1970
         ]
-        
+
         if priority != .basic {
             dict[CodingKeys.priority.rawValue] = priority.rawValue
         }
-        
+
         if let deadline = deadline {
             dict[CodingKeys.deadline.rawValue] = deadline.timeIntervalSince1970
         }
-        
+
         if let dateModified = dateModified {
             dict[CodingKeys.dateModified.rawValue] = dateModified.timeIntervalSince1970
         }
-        
+
         return dict
     }
 }

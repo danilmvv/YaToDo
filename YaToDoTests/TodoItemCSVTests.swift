@@ -26,7 +26,7 @@ final class TodoItemCSVTests: XCTestCase {
         let expectedCSV = "123,Test,false,1718971200.0,important,1718971200.0,1718971200.0"
         XCTAssertEqual(csv, expectedCSV)
     }
-    
+
     func testCSVDeserialization() {
         let csv = "123,Test,false,1718971200.0,important,1718971200.0,1718971200.0"
 
@@ -40,7 +40,7 @@ final class TodoItemCSVTests: XCTestCase {
         XCTAssertEqual(todoItem?.dateCreated.timeIntervalSince1970, 1718971200.0)
         XCTAssertEqual(todoItem?.dateModified?.timeIntervalSince1970, 1718971200.0)
     }
-    
+
     func testCSVSerializationWithCommas() {
         let todoItem = TodoItem(
             id: "123",
@@ -57,12 +57,12 @@ final class TodoItemCSVTests: XCTestCase {
         let expectedCSV = "123,\"Testing, separators, 123\",false,1718971200.0,important,1718971200.0,1718971200.0"
         XCTAssertEqual(csv, expectedCSV)
     }
-    
+
     func testCSVDeserializationWithCommas() {
         let csv = "123,\"Testing, separators, 123\",false,1718971200.0,important,1718971200.0,1718971200.0"
-        
+
         let todoItem = TodoItem.parse(csv: csv)
-        
+
         XCTAssertEqual(todoItem?.id, "123")
         XCTAssertEqual(todoItem?.text, "Testing, separators, 123")
         XCTAssertEqual(todoItem?.priority, .important)
@@ -71,12 +71,12 @@ final class TodoItemCSVTests: XCTestCase {
         XCTAssertEqual(todoItem?.dateCreated.timeIntervalSince1970, 1718971200.0)
         XCTAssertEqual(todoItem?.dateModified?.timeIntervalSince1970, 1718971200.0)
     }
-    
+
     func testTodoItemFromInvalidCSVMissingFields() {
         let csv = "123,,false,,,,"
 
         let todoItem = TodoItem.parse(csv: csv)
         XCTAssertNil(todoItem, "CSV Deserialization With Missing Required Fields Failed")
     }
-    
+
 }

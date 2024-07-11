@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension TodoEdit {
-    
+
     @Observable
     class ViewModel {
         var todo: TodoItem?
@@ -22,10 +22,10 @@ extension TodoEdit {
         var todoDeadline: Date
         var todoCompletion: Bool
         var todoDateCreated: Date
-        
+
         var customCategoryName: String = ""
         var customCategoryColor: Color = .random()
-        
+
         /// Инициализатор для добавления нового todo
         init() {
             self.todo = nil
@@ -39,7 +39,7 @@ extension TodoEdit {
             self.todoCompletion = false
             self.todoDateCreated = Date()
         }
-        
+
         /// Инициализатор для изменения существующего todo
         init(todo: TodoItem) {
             self.todo = todo
@@ -53,8 +53,8 @@ extension TodoEdit {
             self.todoCompletion = todo.isDone
             self.todoDateCreated = todo.dateCreated
         }
-        
-        func createTodo() -> TodoItem {            
+
+        func createTodo() -> TodoItem {
             let newTodo = TodoItem(
                 id: todoId,
                 text: todoText,
@@ -66,7 +66,7 @@ extension TodoEdit {
                 dateCreated: todoDateCreated,
                 dateModified: Date()
             )
-            
+
             return newTodo
         }
     }

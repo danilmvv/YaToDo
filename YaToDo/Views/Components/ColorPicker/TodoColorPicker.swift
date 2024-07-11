@@ -11,13 +11,13 @@ struct TodoColorPicker: View {
     @Binding var color: Color
     @State private var selectedHue: Double = 0.0
     @State private var brightness: Double = 1.0
-    
+
     @Environment(\.dismiss) var dismiss
-    
+
     var currentColor: Color {
         Color(hue: selectedHue, saturation: 1.0, brightness: brightness)
     }
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -26,12 +26,12 @@ struct TodoColorPicker: View {
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
-                
+
                 ColorSpectrum(selectedHue: $selectedHue)
                     .frame(height: 40)
                     .cornerRadius(10)
                     .padding(.horizontal)
-                
+
                 Slider(value: $brightness, in: 0.0...1.0)
                     .padding()
             }
@@ -41,13 +41,13 @@ struct TodoColorPicker: View {
                         Rectangle()
                             .fill(currentColor)
                             .cornerRadius(8)
-                        
+
                         Text(currentColor.toHexString())
                             .foregroundStyle(currentColor.isDark ? .white : .black)
                             .padding(8)
                     }
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         dismiss()
@@ -63,7 +63,7 @@ struct TodoColorPicker: View {
             .onAppear {
                 updateState(from: color)
             }
-            .onChange(of: color) { oldColor, newColor in
+            .onChange(of: color) { _, newColor in
                 updateState(from: newColor)
             }
             .onChange(of: selectedHue) {
@@ -72,11 +72,11 @@ struct TodoColorPicker: View {
             .onChange(of: brightness) {
                 updateColor()
             }
-            
+
             // TODO: Optimize updates
         }
     }
-    
+
     private func updateState(from color: Color) {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
@@ -86,7 +86,7 @@ struct TodoColorPicker: View {
         self.selectedHue = Double(hue)
         self.brightness = Double(brightness)
     }
-    
+
     private func updateColor() {
         color = currentColor
     }
@@ -94,7 +94,7 @@ struct TodoColorPicker: View {
 
 struct ColorSpectrum: View {
     @Binding var selectedHue: Double
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
@@ -113,7 +113,7 @@ struct ColorSpectrum: View {
                     startPoint: .leading,
                     endPoint: .trailing
                 )
-                
+
                 Circle()
                     .stroke(Color.white, lineWidth: 2)
                     .frame(width: 20, height: 20)

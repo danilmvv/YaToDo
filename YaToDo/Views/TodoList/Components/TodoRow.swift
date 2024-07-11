@@ -9,20 +9,20 @@ import SwiftUI
 
 struct TodoRow: View {
     @Environment(ModelData.self) var modelData
-    
+
     var todo: TodoItem
     var todoIndex: Int {
         modelData.todos.firstIndex(where: { $0.id == todo.id }) ?? 0
     }
-    
+
     var isDone: Bool {
         if !modelData.todos.isEmpty {
             return modelData.todos[todoIndex].isDone
         }
-        
+
         return false
     }
-    
+
     var body: some View {
         HStack {
             // Done Button
@@ -43,15 +43,15 @@ struct TodoRow: View {
                     .contentShape(Rectangle())
                     .padding(.leading)
                     .padding(.trailing, 8)
-                
+
             }
             .buttonStyle(.plain)
             .contentTransition(.symbolEffect(.replace))
             .sensoryFeedback(.impact(weight: .medium), trigger: todo.isDone)
-            
+
             VStack(alignment: .leading) {
                 HStack(spacing: 4) {
-                    
+
                     // Priority Label
                     if todo.priority != .basic && !isDone {
                         Image(systemName: todo.priority.icon)
@@ -59,7 +59,7 @@ struct TodoRow: View {
                         .foregroundColor(todo.priority == .low ? .secondary : .red)
                         .fontWeight(.bold)
                     }
-                    
+
                     // Todo Text
                     Text(todo.text)
                         .lineLimit(3)
@@ -67,7 +67,7 @@ struct TodoRow: View {
                         .foregroundStyle(todo.isDone ? .secondary : .primary)
                         .strikethrough(todo.isDone, color: .secondary)
                 }
-                
+
                 // Deadline
                 if let deadline = todo.deadline {
                     HStack(spacing: 2) {
@@ -79,9 +79,9 @@ struct TodoRow: View {
                 }
             }
             .padding(.vertical, 8)
-            
+
             Spacer()
-            
+
             Rectangle()
                 .fill(Color.fromHexString(todo.color))
                 .frame(width: 5)
@@ -90,8 +90,6 @@ struct TodoRow: View {
         .contentShape(Rectangle())
     }
 }
-
-
 
 #Preview {
     TodoRow(todo: TodoItem(id: "123", text: "Купить что-то", priority: .important, deadline: Date()))
