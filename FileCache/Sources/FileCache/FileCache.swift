@@ -23,7 +23,7 @@ public final class FileCache<T: Cacheable> {
         }
     }
 
-    public func deleteTodo(_ id: String) {
+    public func deleteItem(_ id: String) {
         items.removeAll { $0.id == id }
     }
 
