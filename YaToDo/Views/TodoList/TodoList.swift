@@ -50,6 +50,7 @@ struct TodoList: View {
     }
 
     // Compact UI
+    @MainActor
     private var compactSection: some View {
         ZStack {
             if !modelData.todos.isEmpty {
@@ -140,6 +141,7 @@ struct TodoList: View {
     }
 
     // Big UI
+    @MainActor
     private var regularSection: some View {
         ZStack {
             if !modelData.todos.isEmpty {

@@ -36,6 +36,8 @@
 		3CA19E8E2C371F2800A28319 /* TodoCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA19E8D2C371F2800A28319 /* TodoCalendar.swift */; };
 		3CA19EBB2C388FB200A28319 /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA19EBA2C388FB200A28319 /* CategoryPicker.swift */; };
 		3CA19EBE2C389E5C00A28319 /* TodoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA19EBD2C389E5C00A28319 /* TodoItemCell.swift */; };
+		3CD082EC2C41C516002892A4 /* URLSession+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD082EB2C41C516002892A4 /* URLSession+DataTask.swift */; };
+		3CD082EE2C41C924002892A4 /* DataTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD082ED2C41C924002892A4 /* DataTaskTests.swift */; };
 		3CD370B72C284F40004B8107 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3CD370B62C284F40004B8107 /* .gitignore */; };
 		3CF6619E2C2085CC00BD719F /* YaToDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */; };
 		3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF6619F2C2085CC00BD719F /* ContentView.swift */; };
@@ -84,6 +86,8 @@
 		3CA19E8D2C371F2800A28319 /* TodoCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCalendar.swift; sourceTree = "<group>"; };
 		3CA19EBA2C388FB200A28319 /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
 		3CA19EBD2C389E5C00A28319 /* TodoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemCell.swift; sourceTree = "<group>"; };
+		3CD082EB2C41C516002892A4 /* URLSession+DataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+DataTask.swift"; sourceTree = "<group>"; };
+		3CD082ED2C41C924002892A4 /* DataTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskTests.swift; sourceTree = "<group>"; };
 		3CD370B62C284F40004B8107 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3CF6619A2C2085CC00BD719F /* YaToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YaToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YaToDoApp.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 		3C4EB7072C2BF133000B7F6A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3CD082EA2C41C4FA002892A4 /* URLSession */,
 				3CA19E862C369E7B00A28319 /* Date */,
 				3C4EB71D2C2F3F0C000B7F6A /* Color */,
 			);
@@ -185,6 +190,7 @@
 				3C9206232C25ECE2002A8272 /* TodoItemTests.swift */,
 				3C9A2BA42C2B4865007CD7F8 /* TodoItemJSONTests.swift */,
 				3C9A2BA62C2B48AF007CD7F8 /* TodoItemCSVTests.swift */,
+				3CD082ED2C41C924002892A4 /* DataTaskTests.swift */,
 			);
 			path = YaToDoTests;
 			sourceTree = "<group>";
@@ -271,16 +277,24 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		3CD082EA2C41C4FA002892A4 /* URLSession */ = {
+			isa = PBXGroup;
+			children = (
+				3CD082EB2C41C516002892A4 /* URLSession+DataTask.swift */,
+			);
+			path = URLSession;
+			sourceTree = "<group>";
+		};
 		3CF661912C2085CC00BD719F = {
 			isa = PBXGroup;
 			children = (
-				3C732B4B2C4122EB00EBC4DA /* FileCache */,
 				3CF6619C2C2085CC00BD719F /* YaToDo */,
 				3C92061B2C25ECC0002A8272 /* YaToDoTests */,
-				3CD370B62C284F40004B8107 /* .gitignore */,
 				3CF6619B2C2085CC00BD719F /* Products */,
 				8BD75D11FCAB75ECBEA1F5BB /* Pods */,
 				1EA8388C8433FCF9D2B2117D /* Frameworks */,
+				3CD370B62C284F40004B8107 /* .gitignore */,
+				3C732B4B2C4122EB00EBC4DA /* FileCache */,
 			);
 			sourceTree = "<group>";
 		};
@@ -506,6 +520,7 @@
 			files = (
 				3C9A2BA72C2B48AF007CD7F8 /* TodoItemCSVTests.swift in Sources */,
 				3C9A2BA52C2B4865007CD7F8 /* TodoItemJSONTests.swift in Sources */,
+				3CD082EE2C41C924002892A4 /* DataTaskTests.swift in Sources */,
 				3C9206242C25ECE2002A8272 /* TodoItemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,6 +538,7 @@
 				3CA19E812C367CE200A28319 /* TodoCalendarRepresentable.swift in Sources */,
 				3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */,
 				3C4EB7232C2F96F7000B7F6A /* TodoColorPicker.swift in Sources */,
+				3CD082EC2C41C516002892A4 /* URLSession+DataTask.swift in Sources */,
 				3C9A2B912C2B3012007CD7F8 /* TodoItem+Cacheable.swift in Sources */,
 				3CA19E8A2C36C64900A28319 /* Date+StartOfDay.swift in Sources */,
 				3CA19EBB2C388FB200A28319 /* CategoryPicker.swift in Sources */,
@@ -737,6 +753,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danilmasnaviev.YaToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -768,6 +785,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danilmasnaviev.YaToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
