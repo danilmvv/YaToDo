@@ -3,7 +3,7 @@
 
 import Foundation
 
-enum FileCacheError: Error {
+public enum FileCacheError: Error {
     case fileNotFound
     case saveFailed(Error)
     case loadFailed(Error)
@@ -13,7 +13,9 @@ enum FileCacheError: Error {
 public final class FileCache<T: Cacheable> {
     private(set) var items: [T] = []
 
-    func addItem(_ item: T) {
+    public init() {}
+
+    public func addItem(_ item: T) {
         if let index = items.firstIndex(where: { $0.id == item.id }) {
             items[index] = item
         } else {
@@ -21,11 +23,11 @@ public final class FileCache<T: Cacheable> {
         }
     }
 
-    func deleteTodo(_ id: String) {
+    public func deleteTodo(_ id: String) {
         items.removeAll { $0.id == id }
     }
 
-    func saveJSON(filename: String) throws {
+    public func saveJSON(filename: String) throws {
         let fileURL = try getFileURL(filename)
         let jsonItems = items.map({ $0.json })
 
@@ -37,7 +39,7 @@ public final class FileCache<T: Cacheable> {
         }
     }
 
-    func loadJSON(filename: String) throws {
+    public func loadJSON(filename: String) throws {
         let fileURL = try getFileURL(filename)
 
         do {
@@ -56,7 +58,7 @@ public final class FileCache<T: Cacheable> {
         }
     }
 
-    func saveCSV(filename: String) throws {
+    public func saveCSV(filename: String) throws {
         let fileURL = try getFileURL(filename)
         let csvItems = items.map({ $0.csv }).joined(separator: "\n")
 
@@ -67,7 +69,7 @@ public final class FileCache<T: Cacheable> {
         }
     }
 
-    func loadCSV(filename: String) throws {
+    public func loadCSV(filename: String) throws {
         let fileURL = try getFileURL(filename)
 
         do {
