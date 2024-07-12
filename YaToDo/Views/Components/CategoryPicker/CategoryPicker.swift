@@ -10,10 +10,10 @@ import SwiftUI
 struct CategoryPicker: View {
     @Environment(ModelData.self) var modelData
     @Binding var viewModel: TodoEdit.ViewModel
-    
+
     @State private var isAddingCategory = false
     @State private var showAlert = false
-    
+
     var body: some View {
         VStack {
             Form {
@@ -34,11 +34,11 @@ struct CategoryPicker: View {
                         }
                     }
                 }
-                
+
                 if isAddingCategory {
                     Section {
                         TextField("Название категории", text: $viewModel.customCategoryName)
-                        
+
                         ColorPicker("Цвет", selection: $viewModel.customCategoryColor)
                     } header: {
                         if showAlert {
@@ -47,7 +47,7 @@ struct CategoryPicker: View {
                         }
                     }
                 }
-                
+
                 Button {
                     withAnimation {
                         if isAddingCategory {
@@ -57,9 +57,9 @@ struct CategoryPicker: View {
                                     name: viewModel.customCategoryName,
                                     color: viewModel.customCategoryColor
                                 )
-                                
+
                                 modelData.addCustomCategory(category)
-                                
+
                                 viewModel.todoCategory = category
                                 viewModel.customCategoryName = ""
                                 viewModel.customCategoryColor = .random()

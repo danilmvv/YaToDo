@@ -18,16 +18,26 @@ final class TodoItemJSONTests: XCTestCase {
         let isDone = false
         let dateCreated = Date()
         let dateModified = Date()
-        
-        let todo = TodoItem(id: id, text: text, priority: priority, deadline: deadline, isDone: isDone, dateCreated: dateCreated, dateModified: dateModified)
-        
+
+        let todo = TodoItem(
+            id: id,
+            text: text,
+            priority: priority,
+            deadline: deadline,
+            isDone: isDone,
+            dateCreated: dateCreated,
+            dateModified: dateModified
+        )
+
         let json = todo.json
-        
+
         if let jsonDict = json as? [String: Any] {
             XCTAssertEqual(jsonDict[TodoItem.CodingKeys.id.rawValue] as? String, todo.id)
             XCTAssertEqual(jsonDict[TodoItem.CodingKeys.text.rawValue] as? String, todo.text)
             XCTAssertEqual(jsonDict[TodoItem.CodingKeys.priority.rawValue] as? String, todo.priority.rawValue)
-            XCTAssertEqual(jsonDict[TodoItem.CodingKeys.deadline.rawValue] as? TimeInterval, todo.deadline?.timeIntervalSince1970)
+            XCTAssertEqual(
+                jsonDict[TodoItem.CodingKeys.deadline.rawValue] as? TimeInterval, todo.deadline?.timeIntervalSince1970
+            )
             XCTAssertEqual(jsonDict[TodoItem.CodingKeys.isDone.rawValue] as? Bool, todo.isDone)
             XCTAssertNotNil(jsonDict[TodoItem.CodingKeys.dateCreated.rawValue])
             XCTAssertNotNil(jsonDict[TodoItem.CodingKeys.dateModified.rawValue])
@@ -35,12 +45,12 @@ final class TodoItemJSONTests: XCTestCase {
             XCTFail("JSON Serialization Failed")
         }
     }
-    
+
     func testJSONSerializationWithoutOptionalFields() {
         let todo = TodoItem(text: "Test")
-        
+
         let json = todo.json
-        
+
         if let dict = json as? [String: Any] {
             XCTAssertEqual(dict[TodoItem.CodingKeys.id.rawValue] as? String, todo.id)
             XCTAssertEqual(dict[TodoItem.CodingKeys.text.rawValue] as? String, todo.text)
@@ -50,7 +60,7 @@ final class TodoItemJSONTests: XCTestCase {
             XCTFail("JSON Serialization Without Optional Fields Failed")
         }
     }
-    
+
     func testJSONDeserialization() {
         let json: [String: Any] = [
             TodoItem.CodingKeys.id.rawValue: "123",
@@ -59,9 +69,9 @@ final class TodoItemJSONTests: XCTestCase {
             TodoItem.CodingKeys.deadline.rawValue: Date().timeIntervalSince1970,
             TodoItem.CodingKeys.isDone.rawValue: false,
             TodoItem.CodingKeys.dateCreated.rawValue: Date().timeIntervalSince1970,
-            TodoItem.CodingKeys.dateModified.rawValue: Date().timeIntervalSince1970,
+            TodoItem.CodingKeys.dateModified.rawValue: Date().timeIntervalSince1970
         ]
-        
+
         if let todo = TodoItem.parse(json: json) {
             XCTAssertEqual(todo.id, "123")
             XCTAssertEqual(todo.text, "Test")
@@ -74,15 +84,15 @@ final class TodoItemJSONTests: XCTestCase {
             XCTFail("JSON Deserialization Failed")
         }
     }
-    
+
     func testJSONDeserializationWithoutOptionalFields() {
         let json: [String: Any] = [
             TodoItem.CodingKeys.id.rawValue: "123",
             TodoItem.CodingKeys.text.rawValue: "Test",
             TodoItem.CodingKeys.isDone.rawValue: false,
-            TodoItem.CodingKeys.dateCreated.rawValue: Date().timeIntervalSince1970,
+            TodoItem.CodingKeys.dateCreated.rawValue: Date().timeIntervalSince1970
         ]
-        
+
         if let todo = TodoItem.parse(json: json) {
             XCTAssertEqual(todo.id, "123")
             XCTAssertEqual(todo.text, "Test")
@@ -93,10 +103,10 @@ final class TodoItemJSONTests: XCTestCase {
             XCTFail("JSON Deserialization Without Optional Fields Failed")
         }
     }
-    
+
     func testJSONDeserializationWithMissingRequiredFields() {
         let json: [String: Any] = [
-            TodoItem.CodingKeys.priority.rawValue: "high",
+            TodoItem.CodingKeys.priority.rawValue: "high"
         ]
 
         let todoItem = TodoItem.parse(json: json)

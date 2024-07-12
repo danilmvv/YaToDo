@@ -21,7 +21,12 @@ struct MockData {
             dateCreated: Date().addingTimeInterval(-2 * 86400)
         ),
         TodoItem(
-            text: "Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обрезается многоточие бла бла бла бла бла",
+            text:
+                """
+                Купить что-то, где-то, зачем-то, но зачем не очень понятно,
+                но точно чтобы показать как обрезается многоточие
+                бла бла бла бла бла
+                """,
             deadline: Date().addingTimeInterval(5 * 86400),
             dateCreated: Date().addingTimeInterval(-3 * 86400)
         ),
@@ -49,7 +54,7 @@ struct MockData {
             deadline: Date().addingTimeInterval(86400),
             dateCreated: Date().addingTimeInterval(-7 * 86400)
         ),
-        
+
         TodoItem(
             text: "Купить что-то",
             priority: .important,
@@ -69,7 +74,7 @@ struct MockData {
             deadline: Date().addingTimeInterval(86400),
             dateCreated: Date().addingTimeInterval(-10 * 86400)
         ),
-        
+
         TodoItem(
             text: "Задание",
             dateCreated: Date().addingTimeInterval(-8 * 86400)

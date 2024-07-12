@@ -9,11 +9,11 @@ import SwiftUI
 
 struct NavBarModifier: ViewModifier {
     let title: String = "Мои дела"
-    
+
     @Binding var filter: ModelData.FilterCategory
     @Binding var showCompleted: Bool
-    @State private var focusedField: Any? = nil
-    
+    @State private var focusedField: Any?
+
     func body(content: Content) -> some View {
         content
             .navigationTitle(title)
@@ -29,7 +29,7 @@ struct NavBarModifier: ViewModifier {
                         Image(systemName: "calendar")
                     }
                 }
-                
+
                 ToolbarItem {
                     Menu {
                         Picker("Категория", selection: $filter) {
@@ -38,7 +38,7 @@ struct NavBarModifier: ViewModifier {
                             }
                         }
                         .pickerStyle(.inline)
-                        
+
                         Toggle(isOn: $showCompleted) {
                             Text("Показать выполненные")
                         }
@@ -46,7 +46,7 @@ struct NavBarModifier: ViewModifier {
                         Label("Фильтр", systemImage: "ellipsis.circle")
                     }
                 }
-                
+
                 ToolbarItem(placement: .keyboard) {
                     HStack {
                         Spacer()

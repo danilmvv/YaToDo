@@ -11,14 +11,14 @@ struct TodoCalendar: View {
     @Environment(ModelData.self) var modelData
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    
+
     @State private var showAddTodoView = false
-    
+
     var body: some View {
         ZStack {
             TodoCalendarRepresentable(modelData: modelData)
                 .ignoresSafeArea()
-            
+
             // not showing on iPads
             if !(horizontalSizeClass == .regular && verticalSizeClass == .regular) {
                 VStack {
@@ -43,7 +43,7 @@ struct TodoCalendar: View {
                 TodoEdit(viewModel: TodoEdit.ViewModel())
             }
         }
-        
+
     }
 }
 

@@ -18,12 +18,12 @@ struct TodoItem: Identifiable, Equatable, Hashable {
     let isDone: Bool
     let dateCreated: Date
     let dateModified: Date?
-    
+
     enum Priority: String, CaseIterable, Comparable {
         case low
         case basic
         case important
-        
+
         /// Функция для сравнения пиоритетов
         static func < (lhs: Priority, rhs: Priority) -> Bool {
             switch (lhs, rhs) {
@@ -35,7 +35,7 @@ struct TodoItem: Identifiable, Equatable, Hashable {
                 return false
             }
         }
-        
+
         var icon: String {
             switch self {
             case .low:
@@ -47,20 +47,20 @@ struct TodoItem: Identifiable, Equatable, Hashable {
             }
         }
     }
-    
+
     struct Category: Identifiable, Equatable, Hashable {
         let id: String
         var name: String
         var color: Color
-        
+
         static let work = Category(id: UUID().uuidString, name: "Работа", color: .red)
         static let study = Category(id: UUID().uuidString, name: "Учеба", color: .blue)
         static let hobbies = Category(id: UUID().uuidString, name: "Хобби", color: .green)
         static let other = Category(id: UUID().uuidString, name: "Другое", color: .clear)
-        
+
         static let predefined: [Category] = [.work, .study, .hobbies]
     }
-    
+
     init(
         id: String = UUID().uuidString,
         text: String,

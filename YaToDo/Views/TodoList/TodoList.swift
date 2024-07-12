@@ -6,24 +6,25 @@
 //
 
 import SwiftUI
+import CocoaLumberjackSwift
 
 struct TodoList: View {
     @Environment(ModelData.self) var modelData
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    
+
     @State private var showAddTodoView = false
     @State private var selectedTodo: TodoItem?
     @State private var newTodoText: String = ""
-    
+
     enum Field {
         case text
     }
     @FocusState private var focusedField: Field?
-    
+
     var body: some View {
         @Bindable var modelData = modelData
-        
+
         // iPad layout
         if horizontalSizeClass == .regular && verticalSizeClass == .regular {
             NavigationSplitView {
@@ -32,27 +33,25 @@ struct TodoList: View {
             } detail: {
                 VStack {
                     Text("<- Выберите тудушку :)")
-                    
+
                     Spacer()
-                    
+
                     Image("harold")
                     Text("Когда заработал NavigationSplitView")
-                    
+
                     Spacer()
                 }
             }
-        }
-        
-        else {
+        } else {
             NavigationStack {
                 compactSection
                     .modifier(NavBarModifier(filter: $modelData.filter, showCompleted: $modelData.showCompleted))
             }
         }
     }
-    
-    
+
     // Compact UI
+    @MainActor
     private var compactSection: some View {
         ZStack {
             if !modelData.todos.isEmpty {
@@ -71,7 +70,7 @@ struct TodoList: View {
                                             }
                                         } label: {
                                             Label("Complete", systemImage: "checkmark.circle.fill")
-                                            
+
                                         }
                                         .tint(.green)
                                     }
@@ -81,7 +80,7 @@ struct TodoList: View {
                                         } label: {
                                             Label("Delete", systemImage: "trash.fill")
                                         }
-                                        
+
                                         Button {
                                             selectedTodo = todo
                                         } label: {
@@ -90,7 +89,7 @@ struct TodoList: View {
                                     }
                                     .listRowInsets(EdgeInsets())
                             }
-                            
+
                             TextField("Новое", text: $newTodoText, axis: .vertical)
                                 .focused($focusedField, equals: .text)
                                 .padding(.leading)
@@ -113,7 +112,7 @@ struct TodoList: View {
             } else {
                 Text("Добавьте свои дела! :)")
             }
-            
+
             VStack {
                 Spacer()
                 Button {
@@ -140,9 +139,13 @@ struct TodoList: View {
                 TodoEdit(viewModel: TodoEdit.ViewModel())
             }
         }
+        .onAppear {
+            DDLogDebug("Loaded Compact UI")
+        }
     }
-    
-    // Big UI
+
+    // Regular UI
+    @MainActor
     private var regularSection: some View {
         ZStack {
             if !modelData.todos.isEmpty {
@@ -169,7 +172,7 @@ struct TodoList: View {
             } else {
                 Text("Добавьте свои дела! :)")
             }
-            
+
             VStack {
                 Spacer()
                 NavigationLink {
@@ -185,6 +188,9 @@ struct TodoList: View {
                         .foregroundStyle(.accent)
                 }
             }
+        }
+        .onAppear {
+            DDLogDebug("Loaded Regular UI")
         }
     }
 }
