@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CocoaLumberjackSwift
 
 @Observable
 final class ModelData {
@@ -47,13 +48,16 @@ final class ModelData {
     func addTodo(_ todo: TodoItem) {
         if let index = todos.firstIndex(where: { $0.id == todo.id }) {
             todos[index] = todo
+            DDLogDebug("Todo Edit")
         } else {
             todos.append(todo)
+            DDLogDebug("Todo Added")
         }
     }
 
     func deleteTodo(_ id: String) {
         todos.removeAll { $0.id == id }
+        DDLogDebug("Todo Deleted")
     }
 
     /// Обработка нажатия на кнопку выполнения
@@ -70,9 +74,11 @@ final class ModelData {
                                    dateModified: Date())
 
         todos[index] = updatedTodo
+        DDLogDebug("Todo Completion Toggled")
     }
 
     func addCustomCategory(_ category: TodoItem.Category) {
         customCategories.append(category)
+        DDLogDebug("Category Added")
     }
 }

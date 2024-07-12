@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CocoaLumberjackSwift
 
 struct TodoList: View {
     @Environment(ModelData.self) var modelData
@@ -138,9 +139,12 @@ struct TodoList: View {
                 TodoEdit(viewModel: TodoEdit.ViewModel())
             }
         }
+        .onAppear {
+            DDLogDebug("Loaded Compact UI")
+        }
     }
 
-    // Big UI
+    // Regular UI
     @MainActor
     private var regularSection: some View {
         ZStack {
@@ -184,6 +188,9 @@ struct TodoList: View {
                         .foregroundStyle(.accent)
                 }
             }
+        }
+        .onAppear {
+            DDLogDebug("Loaded Regular UI")
         }
     }
 }

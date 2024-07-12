@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CocoaLumberjackSwift
 
 struct TodoEdit: View {
     @Environment(ModelData.self) private var modelData
@@ -192,6 +193,7 @@ struct TodoEdit: View {
             TodoColorPickerLabel(color: viewModel.todoColor)
                 .onTapGesture {
                     showColorPicker.toggle()
+                    DDLogInfo("Show ColorPicker")
                 }
         }
     }
@@ -205,6 +207,7 @@ struct TodoEdit: View {
                     Button {
                         withAnimation {
                             showCalendar.toggle()
+                            DDLogInfo("Show Deadline Picker")
                         }
                     } label: {
                         Text(viewModel.todoDeadline.formattedDayMonthYear())

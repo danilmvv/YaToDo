@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CocoaLumberjackSwift
 
 extension TodoEdit {
 
@@ -38,6 +39,8 @@ extension TodoEdit {
             self.todoDeadline = Date().addingTimeInterval(86400)
             self.todoCompletion = false
             self.todoDateCreated = Date()
+
+            DDLogInfo("ADD view opened")
         }
 
         /// Инициализатор для изменения существующего todo
@@ -52,6 +55,8 @@ extension TodoEdit {
             self.todoDeadline = todo.deadline ?? Date().addingTimeInterval(86400)
             self.todoCompletion = todo.isDone
             self.todoDateCreated = todo.dateCreated
+
+            DDLogInfo("EDIT view opened")
         }
 
         func createTodo() -> TodoItem {
@@ -66,6 +71,8 @@ extension TodoEdit {
                 dateCreated: todoDateCreated,
                 dateModified: Date()
             )
+
+            DDLogDebug("New Todo: \(newTodo.text)")
 
             return newTodo
         }

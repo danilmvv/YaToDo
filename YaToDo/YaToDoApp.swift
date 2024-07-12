@@ -14,7 +14,7 @@ struct YaToDoApp: App {
 
     init() {
         setUpLoggers()
-        DDLogInfo("Запуск")
+        DDLogInfo("Init")
     }
 
     var body: some Scene {
