@@ -15,6 +15,11 @@
 		3C4EB7122C2ECBC8000B7F6A /* TodoColorPickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB7112C2ECBC8000B7F6A /* TodoColorPickerLabel.swift */; };
 		3C4EB71C2C2F3F09000B7F6A /* Color+isDark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB71B2C2F3F09000B7F6A /* Color+isDark.swift */; };
 		3C4EB7232C2F96F7000B7F6A /* TodoColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4EB7222C2F96F7000B7F6A /* TodoColorPicker.swift */; };
+		3C602CA02C4AD1D500F29C13 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C602C9F2C4AD1D500F29C13 /* NetworkingService.swift */; };
+		3C602CA22C4AD23E00F29C13 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C602CA12C4AD23E00F29C13 /* Endpoints.swift */; };
+		3C602CA42C4AD25500F29C13 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C602CA32C4AD25500F29C13 /* NetworkingError.swift */; };
+		3C602CA62C4AD2C400F29C13 /* DefaultNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C602CA52C4AD2C400F29C13 /* DefaultNetworkingService.swift */; };
+		3C602CA82C4AD88300F29C13 /* HTTPMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C602CA72C4AD88300F29C13 /* HTTPMethods.swift */; };
 		3C68296B2C4005E100B9BA05 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3C68296A2C4005E100B9BA05 /* CocoaLumberjackSwift */; };
 		3C68296D2C4007C200B9BA05 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 3C68296C2C4007C200B9BA05 /* CocoaLumberjack */; };
 		3C732B4C2C4122EB00EBC4DA /* FileCache in Resources */ = {isa = PBXBuildFile; fileRef = 3C732B4B2C4122EB00EBC4DA /* FileCache */; };
@@ -67,6 +72,11 @@
 		3C4EB7112C2ECBC8000B7F6A /* TodoColorPickerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColorPickerLabel.swift; sourceTree = "<group>"; };
 		3C4EB71B2C2F3F09000B7F6A /* Color+isDark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+isDark.swift"; sourceTree = "<group>"; };
 		3C4EB7222C2F96F7000B7F6A /* TodoColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoColorPicker.swift; sourceTree = "<group>"; };
+		3C602C9F2C4AD1D500F29C13 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		3C602CA12C4AD23E00F29C13 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		3C602CA32C4AD25500F29C13 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
+		3C602CA52C4AD2C400F29C13 /* DefaultNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkingService.swift; sourceTree = "<group>"; };
+		3C602CA72C4AD88300F29C13 /* HTTPMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethods.swift; sourceTree = "<group>"; };
 		3C732B4B2C4122EB00EBC4DA /* FileCache */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FileCache; sourceTree = "<group>"; };
 		3C92060D2C256878002A8272 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		3C92061A2C25ECC0002A8272 /* YaToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YaToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +170,18 @@
 				3C4EB71B2C2F3F09000B7F6A /* Color+isDark.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		3C602C9E2C496EC700F29C13 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3C602C9F2C4AD1D500F29C13 /* NetworkingService.swift */,
+				3C602CA52C4AD2C400F29C13 /* DefaultNetworkingService.swift */,
+				3C602CA12C4AD23E00F29C13 /* Endpoints.swift */,
+				3C602CA72C4AD88300F29C13 /* HTTPMethods.swift */,
+				3C602CA32C4AD25500F29C13 /* NetworkingError.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		3C8FD9372C29D10400AB4C4A /* Model */ = {
@@ -313,6 +335,7 @@
 				3CF6619D2C2085CC00BD719F /* YaToDoApp.swift */,
 				3C8FD9382C29D10E00AB4C4A /* Views */,
 				3C8FD9372C29D10400AB4C4A /* Model */,
+				3C602C9E2C496EC700F29C13 /* Network */,
 				3C4EB7072C2BF133000B7F6A /* Extensions */,
 				3CF661A12C2085CE00BD719F /* Assets.xcassets */,
 				3CF661A32C2085CE00BD719F /* Preview Content */,
@@ -535,16 +558,21 @@
 				3C4EB70F2C2EC642000B7F6A /* Color+Random.swift in Sources */,
 				3C4EB71C2C2F3F09000B7F6A /* Color+isDark.swift in Sources */,
 				3C4EB7092C2BF1D9000B7F6A /* Date+Formatting.swift in Sources */,
+				3C602CA62C4AD2C400F29C13 /* DefaultNetworkingService.swift in Sources */,
 				3CA19E812C367CE200A28319 /* TodoCalendarRepresentable.swift in Sources */,
 				3CF661A02C2085CC00BD719F /* ContentView.swift in Sources */,
 				3C4EB7232C2F96F7000B7F6A /* TodoColorPicker.swift in Sources */,
 				3CD082EC2C41C516002892A4 /* URLSession+DataTask.swift in Sources */,
+				3C602CA42C4AD25500F29C13 /* NetworkingError.swift in Sources */,
 				3C9A2B912C2B3012007CD7F8 /* TodoItem+Cacheable.swift in Sources */,
+				3C602CA02C4AD1D500F29C13 /* NetworkingService.swift in Sources */,
 				3CA19E8A2C36C64900A28319 /* Date+StartOfDay.swift in Sources */,
 				3CA19EBB2C388FB200A28319 /* CategoryPicker.swift in Sources */,
 				3C9A2B9B2C2B4240007CD7F8 /* TodoRow.swift in Sources */,
 				3CA19E832C3692E500A28319 /* MockData.swift in Sources */,
+				3C602CA22C4AD23E00F29C13 /* Endpoints.swift in Sources */,
 				3C92060E2C256878002A8272 /* TodoItem.swift in Sources */,
+				3C602CA82C4AD88300F29C13 /* HTTPMethods.swift in Sources */,
 				3C9A2B992C2B4235007CD7F8 /* TodoList.swift in Sources */,
 				3C4EB70B2C2C064A000B7F6A /* TodoEditViewModel.swift in Sources */,
 				3CA19E7F2C367BF800A28319 /* TodoCalendarViewController.swift in Sources */,
