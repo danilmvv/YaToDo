@@ -18,6 +18,7 @@ struct TodoItem: Identifiable, Equatable, Hashable {
     let isDone: Bool
     let dateCreated: Date
     let dateModified: Date?
+    let lastUpdatedBy: String
 
     enum Priority: String, CaseIterable, Comparable {
         case low
@@ -70,7 +71,8 @@ struct TodoItem: Identifiable, Equatable, Hashable {
         deadline: Date? = nil,
         isDone: Bool = false,
         dateCreated: Date = Date(),
-        dateModified: Date? = nil
+        dateModified: Date? = nil,
+        lastUpdatedBy: String = "123"
     ) {
         self.id = id
         self.text = text
@@ -81,6 +83,7 @@ struct TodoItem: Identifiable, Equatable, Hashable {
         self.isDone = isDone
         self.dateCreated = dateCreated
         self.dateModified = dateModified
+        self.lastUpdatedBy = lastUpdatedBy
     }
 }
 
@@ -88,10 +91,12 @@ extension TodoItem {
     enum CodingKeys: String, CaseIterable {
         case id = "id"
         case text = "text"
-        case isDone = "done"
         case priority = "importance"
+        case color = "color"
         case deadline = "deadline"
+        case isDone = "done"
         case dateCreated = "created_at"
         case dateModified = "changed_at"
+        case lastUpdatedBy = "last_updated_by"
     }
 }

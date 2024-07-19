@@ -9,14 +9,14 @@ import Foundation
 
 enum Endpoint {
     static let baseURL = URL(string: "https://hive.mrdekk.ru/todo")!
-    
+
     case getList
     case updateList
     case getItem(id: String)
     case addItem
     case updateItem(id: String)
     case deleteItem(id: String)
-    
+
     var path: String {
         switch self {
         case .getList, .updateList, .addItem:
@@ -25,7 +25,7 @@ enum Endpoint {
             return "/list/\(id)"
         }
     }
-    
+
     var url: URL {
         return Endpoint.baseURL.appendingPathComponent(path)
     }

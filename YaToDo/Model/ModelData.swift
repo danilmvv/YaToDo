@@ -9,8 +9,8 @@ import Foundation
 import CocoaLumberjackSwift
 
 @Observable
-final class ModelData {
-    private(set) var todos: [TodoItem] = [] // TODO: rewrite to dictionary
+final class ModelData: @unchecked Sendable {
+    private(set) var todos: [TodoItem] = []
 
     private var customCategories: [TodoItem.Category] = []
     var categories: [TodoItem.Category] {
@@ -40,24 +40,73 @@ final class ModelData {
         }
     }
 
-    // Моковые данные для теста UI и Observable
-    init() {
-        todos = MockData.todos
+    private let networkingService: NetworkingService
+    var isLoading = false
+    var error: Error?
+
+    init(networkingService: NetworkingService = DefaultNetworkingService(token: "Andreth")) {
+        //        todos = MockData.todos // Моковые данные для теста UI и Observable
+
+        self.networkingService = networkingService
+    }
+
+    func fetchTodoList() async {
+        isLoading = true
+        error = nil
+        do {
+            let result = try await networkingService.fetchTodoList()
+            todos = result
+        } catch {
+            self.error = error
+            DDLogDebug("\(error)")
+        }
+        isLoading = false
     }
 
     func addTodo(_ todo: TodoItem) {
         if let index = todos.firstIndex(where: { $0.id == todo.id }) {
             todos[index] = todo
             DDLogDebug("Todo Edit")
+
+            Task {
+                do {
+                    let response = try await networkingService.updateTodoItem(todo)
+                    DDLogDebug("\(response)")
+                } catch {
+                    self.error = error
+                    DDLogDebug("\(error)")
+                }
+            }
         } else {
             todos.append(todo)
             DDLogDebug("Todo Added")
+
+            Task {
+                do {
+                    let response = try await networkingService.addTodoItem(todo)
+                    DDLogDebug("\(response)")
+                } catch {
+                    self.error = error
+                    DDLogDebug("\(error)")
+                }
+            }
         }
+
     }
 
     func deleteTodo(_ id: String) {
         todos.removeAll { $0.id == id }
         DDLogDebug("Todo Deleted")
+
+        Task {
+            do {
+                let responce = try await networkingService.deleteTodoItem(id: id)
+                DDLogDebug("Delete: \(responce)")
+            } catch {
+                self.error = error
+                DDLogDebug("\(error)")
+            }
+        }
     }
 
     /// Обработка нажатия на кнопку выполнения
@@ -75,6 +124,16 @@ final class ModelData {
 
         todos[index] = updatedTodo
         DDLogDebug("Todo Completion Toggled")
+
+        Task {
+            do {
+                let response = try await networkingService.updateTodoItem(updatedTodo)
+                DDLogDebug("\(response)")
+            } catch {
+                self.error = error
+                DDLogDebug("\(error)")
+            }
+        }
     }
 
     func addCustomCategory(_ category: TodoItem.Category) {
