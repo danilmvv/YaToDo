@@ -41,6 +41,15 @@ final class ModelData: @unchecked Sendable {
     }
 
     private let networkingService: NetworkingService
+    var isDirty = false {
+        didSet {
+            if isDirty {
+                Task {
+                    await syncTodos()
+                }
+            }
+        }
+    }
     var isLoading = false
     var error: Error?
 
@@ -75,6 +84,7 @@ final class ModelData: @unchecked Sendable {
                 } catch {
                     self.error = error
                     DDLogDebug("\(error)")
+                    isDirty = true
                 }
             }
         } else {
@@ -88,6 +98,7 @@ final class ModelData: @unchecked Sendable {
                 } catch {
                     self.error = error
                     DDLogDebug("\(error)")
+                    isDirty = true
                 }
             }
         }
@@ -105,7 +116,20 @@ final class ModelData: @unchecked Sendable {
             } catch {
                 self.error = error
                 DDLogDebug("\(error)")
+                isDirty = true
             }
+        }
+    }
+
+    func syncTodos() async {
+        do {
+            let syncedTodos = try await networkingService.updateTodoList(todos)
+            Task { @MainActor in
+                todos = syncedTodos
+                isDirty = false
+            }
+        } catch {
+            //
         }
     }
 
@@ -132,6 +156,7 @@ final class ModelData: @unchecked Sendable {
             } catch {
                 self.error = error
                 DDLogDebug("\(error)")
+                isDirty = true
             }
         }
     }
