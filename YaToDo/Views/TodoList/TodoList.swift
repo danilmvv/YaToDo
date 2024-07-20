@@ -30,6 +30,11 @@ struct TodoList: View {
             NavigationSplitView {
                 regularSection
                     .modifier(NavBarModifier(filter: $modelData.filter, showCompleted: $modelData.showCompleted))
+                    .task {
+                        Task {
+                            await modelData.fetchTodoList()
+                        }
+                    }
             } detail: {
                 VStack {
                     Text("<- Выберите тудушку :)")
@@ -46,6 +51,11 @@ struct TodoList: View {
             NavigationStack {
                 compactSection
                     .modifier(NavBarModifier(filter: $modelData.filter, showCompleted: $modelData.showCompleted))
+                    .task {
+                        Task {
+                            await modelData.fetchTodoList()
+                        }
+                    }
             }
         }
     }
@@ -109,8 +119,13 @@ struct TodoList: View {
                 } else {
                     Text("Все выполнено! :)")
                 }
+
             } else {
-                Text("Добавьте свои дела! :)")
+                if modelData.isLoading {
+                    ProgressView()
+                } else {
+                    Text("Добавьте свои дела! :)")
+                }
             }
 
             VStack {
@@ -170,7 +185,11 @@ struct TodoList: View {
                     Text("Все выполнено :)")
                 }
             } else {
-                Text("Добавьте свои дела! :)")
+                if modelData.isLoading {
+                    ProgressView()
+                } else {
+                    Text("Добавьте свои дела! :)")
+                }
             }
 
             VStack {

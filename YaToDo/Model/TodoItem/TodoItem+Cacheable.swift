@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import FileCache
 
 extension TodoItem: Cacheable {
@@ -30,9 +31,12 @@ extension TodoItem: Cacheable {
 
         // Проверка опциональных полей
         let priorityString = dict[CodingKeys.priority.rawValue] as? String ?? Priority.basic.rawValue
+
         guard let priority = Priority(rawValue: priorityString) else {
             return nil
         }
+
+        let color = dict[CodingKeys.color.rawValue] as? String ?? Color.random().toHexString()
 
         let deadline: Date?
         if let deadlineInterval = dict[CodingKeys.deadline.rawValue] as? TimeInterval {
@@ -52,6 +56,7 @@ extension TodoItem: Cacheable {
             id: id,
             text: text,
             priority: priority,
+            color: color,
             deadline: deadline,
             isDone: isDone,
             dateCreated: dateCreated,
@@ -63,20 +68,19 @@ extension TodoItem: Cacheable {
         var dict: [String: Any] = [
             CodingKeys.id.rawValue: id,
             CodingKeys.text.rawValue: text,
+            CodingKeys.priority.rawValue: priority.rawValue,
+            CodingKeys.color.rawValue: color,
             CodingKeys.isDone.rawValue: isDone,
-            CodingKeys.dateCreated.rawValue: dateCreated.timeIntervalSince1970
+            CodingKeys.dateCreated.rawValue: Int(dateCreated.timeIntervalSince1970),
+            CodingKeys.lastUpdatedBy.rawValue: lastUpdatedBy
         ]
 
-        if priority != .basic {
-            dict[CodingKeys.priority.rawValue] = priority.rawValue
-        }
-
         if let deadline = deadline {
-            dict[CodingKeys.deadline.rawValue] = deadline.timeIntervalSince1970
+            dict[CodingKeys.deadline.rawValue] = Int(deadline.timeIntervalSince1970)
         }
 
         if let dateModified = dateModified {
-            dict[CodingKeys.dateModified.rawValue] = dateModified.timeIntervalSince1970
+            dict[CodingKeys.dateModified.rawValue] = Int(dateModified.timeIntervalSince1970)
         }
 
         return dict
