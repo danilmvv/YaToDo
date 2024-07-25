@@ -11,7 +11,6 @@ import CocoaLumberjackSwift
 class DefaultNetworkingService: NetworkingService {
     private let session: URLSession
     private let token: String
-    private var isDirty: Bool = false
     private var revision: Int = 0
 
     init(session: URLSession = .shared, token: String) {
@@ -74,7 +73,6 @@ class DefaultNetworkingService: NetworkingService {
         }
         let items = list.compactMap(TodoItem.parse)
         self.revision = revision
-        self.isDirty = false
 
         DDLogDebug("Revision: \(revision)")
 
@@ -95,9 +93,8 @@ class DefaultNetworkingService: NetworkingService {
         guard let list = json["list"] as? [[String: Any]], let revision = json["revision"] as? Int else {
             throw NetworkingError.parsingError
         }
-        let items = list.compactMap(TodoItem.parse)
+        let items = list.compactMap { TodoItem.parse(json: $0) }
         self.revision = revision
-        self.isDirty = false
 
         DDLogDebug("Revision: \(revision)")
         return items
@@ -150,7 +147,6 @@ class DefaultNetworkingService: NetworkingService {
             throw NetworkingError.parsingError
         }
         self.revision = revision
-        self.isDirty = false
 
         DDLogDebug("Revision: \(revision)")
         return item
@@ -173,7 +169,6 @@ class DefaultNetworkingService: NetworkingService {
             throw NetworkingError.parsingError
         }
         self.revision = revision
-        self.isDirty = false
 
         DDLogDebug("Revision: \(revision)")
         return item
@@ -193,7 +188,6 @@ class DefaultNetworkingService: NetworkingService {
             throw NetworkingError.parsingError
         }
         self.revision = revision
-        self.isDirty = false
 
         DDLogDebug("Revision: \(revision)")
         return item

@@ -35,6 +35,13 @@ struct TodoList: View {
                             await modelData.fetchTodoList()
                         }
                     }
+                    .alert(isPresented: $modelData.isDirty) {
+                        Alert(
+                            title: Text("Sync Error"),
+                            message: Text("Failed to sync with the server."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
             } detail: {
                 VStack {
                     Text("<- Выберите тудушку :)")
@@ -55,6 +62,13 @@ struct TodoList: View {
                         Task {
                             await modelData.fetchTodoList()
                         }
+                    }
+                    .alert(isPresented: $modelData.isDirty) {
+                        Alert(
+                            title: Text("Sync Error"),
+                            message: Text("Failed to sync with the server."),
+                            dismissButton: .default(Text("OK"))
+                        )
                     }
             }
         }
